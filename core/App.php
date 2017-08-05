@@ -30,15 +30,10 @@ class App
      */
     public function run()
     {
-        $this->container['db'] = new Connection($this->container['config']['database']);
+        $this->container['db'] = (new Connection($this->container['config']['database']))->make();
         $request = $this->container['request'] = new Request;
         $router = $this->container['router'] = new Router($this->container['config']['routes']);
         $response = $this->container['response'] = new Response;
-        $container['errorHandler'] = function () {
-            return function ($response) {
-                return $response->setBody('Page not found')->withStatus(404);
-            };
-        };
         
         try {
             $response = $router->direct(parse_url($request->uri(), PHP_URL_PATH), $request->method());

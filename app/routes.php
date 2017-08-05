@@ -1,3 +1,4 @@
 <?php
 
-$router->get('/', 'TaskController@index');
+$router->get('/tasks', 'TaskController@index');
+$router->post('/tasks', 'TaskController@store');
