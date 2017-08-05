@@ -3,21 +3,12 @@
 namespace App\Controllers;
 
 use Core\Container;
+use Core\Http\Response;
 
 class TaskController
 {
-    /**
-     * @var Core\Http\Response
-     */
-    private $response;
-
-    public function __construct()
-    {
-        $this->response = Container::instance()->response;
-    }
-
     public function index()
     {
-        $this->response->view('tasks/index');
+        return Response::view('tasks/index');
     }
 }

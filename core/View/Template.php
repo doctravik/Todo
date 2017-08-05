@@ -37,7 +37,7 @@ class Template
      * @return void
      */
     public function render() {
-        echo $this->compileView();
+        return $this->compileView();
     }
 
     /**
