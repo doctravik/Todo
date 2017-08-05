@@ -6,11 +6,44 @@ use ArrayAccess;
 
 class Container implements ArrayAccess
 {
-    private $registry = [];
+    /**
+     * @var Container
+     */
+    private static $instance;
 
-    public function __construct(array $items = [])
+    /**
+     * @var array
+     */
+    private $registry = [];
+    
+    /**
+     * Private construstor for the singleton.
+     */
+    private function __construct() {}
+
+    /**
+     * Getter for the instance.
+     * 
+     * @return Container
+     */
+    public function instance()
     {
-        foreach ($items as $key => $item) {
+        if (! self::$instance ) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
+    /**
+     * Load configurations.
+     * 
+     * @param  array  $config
+     * @return void
+     */
+    public function init(array $config = [])
+    {
+        foreach ($config as $key => $item) {
             $this->offsetSet($key, $item);
         }
     }
@@ -73,6 +106,12 @@ class Container implements ArrayAccess
         return $this->offsetExists($offset);
     }
 
+    /**
+     * Easy access to the dependency.
+     * 
+     * @param  string $property
+     * @return mixed
+     */
     public function __get($property)
     {
         return $this->offsetGet($property);

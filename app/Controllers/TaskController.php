@@ -2,10 +2,22 @@
 
 namespace App\Controllers;
 
+use Core\Container;
+
 class TaskController
 {
-    public function inde()
+    /**
+     * @var Core\Http\Response
+     */
+    private $response;
+
+    public function __construct()
     {
-        
+        $this->response = Container::instance()->response;
+    }
+
+    public function index()
+    {
+        $this->response->view('tasks/index');
     }
 }

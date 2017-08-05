@@ -2,6 +2,7 @@
 
 namespace Core;
 
+use Core\Container;
 use Core\Exceptions\RouteNotFoundException;
 
 class Router
