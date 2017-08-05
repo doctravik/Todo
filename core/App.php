@@ -2,9 +2,11 @@
 
 namespace Core;
 
+use Core\Router;
 use Core\Container;
 use Core\Http\Request;
 use Core\Database\Connection;
+use Core\Exceptions\RouteNotFoundException;
 
 class App
 {
@@ -27,12 +29,14 @@ class App
      */
     public function run()
     {
-        $dbConnection = new Connection($this->container['config']['database']);
+        $this->container['db'] = new Connection($this->container['config']['database']);
+        $request = $this->container['request'] = new Request;
+        $router = $this->container['router'] = new Router($this->container['config']['routes']);
 
-        $this->container['db'] = $dbConnection->make();
-        $this->container['request'] = new Request;
-        var_dump($this->container['request']->input('nam'));
-        // $this->container['response'] = new Response;
-        // $this->container['router'] = new Router;
+        try {
+            $router->direct(parse_url($request->uri(), PHP_URL_PATH), $request->method());
+        } catch (RouteNotFoundException $e) {
+            die($e->getMessage());
+        }
     }
 }

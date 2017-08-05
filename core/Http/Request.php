@@ -37,13 +37,13 @@ class Request
     }
 
     /**
-     * Getter for request url.
+     * Getter for request uri.
      * 
      * @return string
      */
-    public function url()
+    public function uri()
     {
-        return $this->url;
+        return $this->uri;
     }
 
     /**
