@@ -50,6 +50,17 @@ class Response
     }
 
     /**
+     * Redirect to the url.
+     * 
+     * @param  string $path
+     * @return static
+     */
+    public static function redirect($url)
+    {
+        return (new static('Redirect'))->withStatus(302)->withHeader('Location', $url);
+    }
+
+    /**
      * Set status code for the Response.
      * 
      * @param  integer $status
@@ -62,14 +73,15 @@ class Response
     }
 
     /**
-     * Set headers for the Response.
+     * Set header for the web response.
      * 
-     * @param  array $headers
+     * @param  string $name
+     * @param  string $value
      * @return $this
      */
-    public function withHeaders(array $headers)
+    public function withHeader($name, $value)
     {
-        $this->headers = $headers;
+        $this->headers[] = [$name, $value];
         return $this;
     }
 

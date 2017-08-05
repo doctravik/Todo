@@ -45,6 +45,6 @@ class TaskController
         $attributes = $this->request->only(['content', 'username','email']);
         $this->builder->insert('tasks', $attributes);
 
-        Response::redirect("tasks/index");
+        return Response::redirect("/tasks");
     }
 }

@@ -6,11 +6,14 @@
     <textarea name="content" placeholder="Task content"></textarea>
     <button type="submit">Create task</button>
 </form>
-<h1>Users</h1>
-<a href="/users/create">Create new user</a>
-<!-- 
+
+<h1>Tasks</h1>
 <ul>
-<?php foreach($users as $user) : ?>
-    <li><?= htmlspecialchars($user->name); ?></li>
-<?php endforeach; ?>
-</ul> -->
+    <?php foreach($tasks as $task) : ?>
+        <li>
+            <span><?= htmlspecialchars($task->content); ?></span>
+            <span><?= htmlspecialchars($task->username); ?></span>
+            <span><?= htmlspecialchars($task->email); ?></span>
+        </li>
+    <?php endforeach; ?>
+</ul>
