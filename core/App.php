@@ -3,6 +3,7 @@
 namespace Core;
 
 use Core\Container;
+use Core\Http\Request;
 use Core\Database\Connection;
 
 class App
@@ -29,5 +30,9 @@ class App
         $dbConnection = new Connection($this->container['config']['database']);
 
         $this->container['db'] = $dbConnection->make();
+        $this->container['request'] = new Request;
+        var_dump($this->container['request']->input('nam'));
+        // $this->container['response'] = new Response;
+        // $this->container['router'] = new Router;
     }
 }
