@@ -32,7 +32,9 @@ class TaskController
      */
     public function index()
     {
-        return Response::view('tasks/index');
+        $tasks = $this->builder->selectAll('tasks');
+
+        return Response::view('tasks/index', compact('tasks'));
     }
 
     /**

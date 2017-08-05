@@ -15,6 +15,20 @@ class QueryBuilder
     {
         $this->pdo = $pdo;        
     }
+    
+    /**
+     * Select all rows from the table.
+     * 
+     * @param string $table
+     * @return array
+     */
+    public function selectAll($table)
+    {
+        $statement = $this->pdo->prepare("select * from $table");
+        $statement->execute();
+
+        return $statement->fetchAll(\PDO::FETCH_OBJ);
+    }
 
     /**
      * Insert attributes into the given table.
