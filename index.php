@@ -3,5 +3,4 @@
 ini_set('display_errors', '1');
 
 require_once 'vendor/autoload.php';
-
-echo 'Hello';
+require_once 'core/bootstrap.php';
