@@ -4,7 +4,8 @@ namespace App\Controllers;
 
 use Core\Container;
 use Core\Http\Response;
-use Core\Database\QueryBuilder;
+use Core\Database\Builder;
+use Core\Validator\Validator;
 
 class TaskController
 {
@@ -14,15 +15,17 @@ class TaskController
     private $request;
 
     /**
-     * @var \PDO
+     * @var Builder
      */
-    private $db;
+    private $builder;
 
+    /**
+     * Create instance of TaskController.
+     */
     public function __construct()
     {
-        $container = Container::instance();
-        $this->request = $container->request;
-        $this->builder = new QueryBuilder($container->db);
+        $this->request = Container::instance()->request;
+        $this->builder = new Builder;
     }
 
     /**
@@ -32,7 +35,7 @@ class TaskController
      */
     public function index()
     {
-        $tasks = $this->builder->selectAll('tasks');
+        $tasks = $this->builder->table('tasks')->get();
 
         return Response::view('tasks/index', compact('tasks'));
     }
@@ -40,12 +43,24 @@ class TaskController
     /**
      * Store task in database.
      * 
-     * @return [type] [description]
+     * @return Response
      */
     public function store()
     {
         $attributes = $this->request->only(['content', 'username','email']);
-        $this->builder->insert('tasks', $attributes);
+        
+        $validator = Validator::validate($attributes, [
+            'content' => ['required'],
+            'username' => ['required'],
+            'email' => ['required', 'email', ['unique' => 'tasks']],
+            // 'image' => [['mimes' => 'jpg,jpeg,png,bmp'], ['max' => '2048']]
+        ]);
+
+        if ($validator->failed()) {
+            return Response::redirect("/tasks")->withErrors($validator->getErrors());
+        }
+
+        $this->builder->table('tasks')->insert($attributes);
 
         return Response::redirect("/tasks");
     }

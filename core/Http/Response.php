@@ -3,6 +3,7 @@
 namespace Core\Http;
 
 use Core\View\Template;
+use Core\Session\ErrorsSessionStorage;
 
 class Response
 {
@@ -82,6 +83,20 @@ class Response
     public function withHeader($name, $value)
     {
         $this->headers[] = [$name, $value];
+        return $this;
+    }
+
+    /**
+     * Set header for the web response.
+     * 
+     * @param  string $name
+     * @param  string $value
+     * @return $this
+     */
+    public function withErrors($errors)
+    {
+        (new ErrorsSessionStorage())->setErrors($errors);
+
         return $this;
     }
 
