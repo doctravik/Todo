@@ -23,6 +23,10 @@
             <span><?= htmlspecialchars($task->content); ?></span>
             <span><?= htmlspecialchars($task->username); ?></span>
             <span><?= htmlspecialchars($task->email); ?></span>
+
+            <?php if (\App\Models\Auth::check()) : ?>
+                <a href="#">Edit</a>
+            <?php endif; ?>
         </li>
     <?php endforeach; ?>
 </ul>
