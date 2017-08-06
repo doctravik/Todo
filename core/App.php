@@ -2,10 +2,10 @@
 
 namespace Core;
 
-use Core\Router;
 use Core\Container;
 use Core\Http\Request;
 use Core\Http\Response;
+use Core\Routing\Router;
 use Core\Database\Connection;
 use Core\Exceptions\RouteNotFoundException;
 

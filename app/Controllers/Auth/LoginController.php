@@ -72,6 +72,11 @@ class LoginController
         return Response::redirect("/tasks");
     }
 
+    /**
+     * Logout from the admin section.
+     * 
+     * @return Response
+     */
     public function logout()
     {
         Auth::logout(); 
