@@ -74,32 +74,38 @@ class TaskController
      */
     public function edit($id)
     {
-        if (Auth::check()) {
+        if (! Auth::check()) {
             throw new NotAuthorisedException;
         }
 
-        $task = $this->db->table('tasks')->where('id', '=', $id)->get();
-        dd($task);
-        return Response::view("tasks/edit", $task);
+        $task = $this->builder->table('tasks')->where('id', '=', $id)->get()[0];
+
+        return Response::view("tasks/edit", compact('task'));
     }
 
     /**
-     * Update task in the database.
+     * Update content of the task in the database.
      * 
      * @return Response
      */
     public function update($id)
     {
-        if (Auth::check()) {
+        if (! Auth::check()) {
             throw new NotAuthorisedException;
         }
 
-        $attributes = $this->request->only(['is_completed']);
+        $attributes = $this->request->only(['content']);
 
-        $this->builder->table('tasks')->where('id', '=', $id)->update([
-            'is_completed' => (bool) $this->request->input('is_completed') ?: 0
+        $validator = Validator::validate($attributes, [
+            'content' => ['required'],
         ]);
 
-        return Response::redirect("/tasks");
+        if ($validator->failed()) {
+            return Response::redirect("/tasks/$id/edit")->withErrors($validator->getErrors());
+        }
+
+        $this->builder->table('tasks')->where('id', '=', $id)->update($attributes);
+
+        return Response::redirect("/tasks/$id/edit");
     }
 }

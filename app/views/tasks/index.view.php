@@ -21,7 +21,7 @@
     <?php foreach($tasks as $task) : ?>
         <li>
             <?php if (\App\Models\Auth::check()) : ?>
-                <form action=<?="/tasks/{$task->id}";?> method="POST">
+                <form action=<?="/tasks/{$task->id}/status/update";?> method="POST">
                     <input type="checkbox" name="is_completed"
                         onChange="this.form.submit()" <?= $task->is_completed ? 'checked' : ''; ?> >
                 </form>
@@ -35,7 +35,7 @@
             <?php endif; ?>
 
             <?php if (\App\Models\Auth::check()) : ?>
-                <a href="#">Edit</a>
+                <a href=<?="/tasks/{$task->id}/edit"; ?>>Edit</a>
             <?php endif; ?>
         </li>
     <?php endforeach; ?>
