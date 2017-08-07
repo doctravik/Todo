@@ -3,6 +3,7 @@
 namespace Core\Routing;
 
 use Core\Container;
+use Core\Routing\Route;
 use Core\Routing\RouteCompiler;
 use Core\Exceptions\RouteNotFoundException;
 
@@ -65,8 +66,8 @@ class Router
     {
         $routes = $this->routes[$method];
 
-        if ($route = $this->findRoute($uri, $routes)) {
-            return $this->getResponse($route, $routes[$route]);
+        if ($this->route = $this->findRoute($uri, $routes)) {
+            return $this->getResponse();
         }
 
         throw new RouteNotFoundException("Route isn't defined");
@@ -77,12 +78,12 @@ class Router
      * 
      * @param  string $uri
      * @param  array $routes
-     * @return string|null
+     * @return Route|null
      */
     protected function findRoute($uri, array $routes) 
     {
         if ($this->matchAgainstRoutes($uri, $routes)) {
-            return $uri;
+            return new Route($uri, $uri, $routes[$uri]);
         }
 
         return $this->checkRoutesConsiderWildcard($uri, $routes);
@@ -104,12 +105,12 @@ class Router
      * 
      * @param  string $uri
      * @param  array $routes
-     * @return string|null
+     * @return Route|null
      */
     protected function checkRoutesConsiderWildcard($uri, array $routes) {
         foreach ($routes as $route => $action) {
-            if ($this->matches($route, $uri)) {
-                return $route;
+            if ($this->matches($regexp = RouteCompiler::getRegexp($route), $uri)) {
+                return new Route($route, $uri, $action, $regexp);
             }
         }
 
@@ -123,21 +124,19 @@ class Router
      * @param  string $uri
      * @return boolean
      */
-    protected function matches($route, $uri) 
+    protected function matches($regexp, $uri) 
     {
-        return preg_match(RouteCompiler::getRegexp($route), $uri);
+        return preg_match($regexp, $uri);
     }
 
     /**
      * Retrieve web response after processing action.
      * 
-     * @param  string $route
-     * @param  string $action
      * @return Core\Http\Response
      */
-    protected function getResponse($route, $action)
+    protected function getResponse()
     {
-        return $this->callAction(...explode('@', $action));
+        return $this->callAction(...explode('@', $this->route->getAction()));
     }
 
     /**
@@ -161,6 +160,6 @@ class Router
             );
         }
 
-        return $controller->$action();
+        return $controller->$action(...array_values($this->route->getParameters()));
     }
 }

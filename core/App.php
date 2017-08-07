@@ -50,7 +50,7 @@ class App
      * @param  mixed $response
      * @return mixed
      */
-    private function process($response)
+    protected function process($response)
     {
         if (!$response instanceof Response) {
             echo $response;

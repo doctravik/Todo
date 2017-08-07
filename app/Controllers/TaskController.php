@@ -64,4 +64,20 @@ class TaskController
 
         return Response::redirect("/tasks");
     }
+
+    /**
+     * Update task in the database.
+     * 
+     * @return Response
+     */
+    public function update($id)
+    {
+        $attributes = $this->request->only(['is_completed']);
+
+        $this->builder->table('tasks')->where('id', '=', $id)->update([
+            'is_completed' => (bool) $this->request->input('is_completed') ?: 0
+        ]);
+
+        return Response::redirect("/tasks");
+    }
 }

@@ -30,6 +30,10 @@
             <span><?= htmlspecialchars($task->username); ?></span>
             <span><?= htmlspecialchars($task->email); ?></span>
 
+            <?php if ($task->is_completed) : ?>
+                <b>Completed</b>
+            <?php endif; ?>
+
             <?php if (\App\Models\Auth::check()) : ?>
                 <a href="#">Edit</a>
             <?php endif; ?>

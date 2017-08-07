@@ -14,3 +14,15 @@ function errors($errorName)
     return new Collection((new ErrorsSessionStorage())->get($errorName));
 }
 
+/**
+ * Dump the value and die script.
+ * 
+ * @param  mixed $value
+ * @return void
+ */
+function dd($value)
+{
+    var_dump($value);
+    die();
+}
+
