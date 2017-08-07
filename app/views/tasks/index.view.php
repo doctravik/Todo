@@ -40,5 +40,3 @@
         </li>
     <?php endforeach; ?>
 </ul>
-
-<?php (new Core\Session\ErrorsSessionStorage())->clear() ?>

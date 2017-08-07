@@ -4,15 +4,15 @@ namespace Core\Session;
 
 use Core\Session\SessionStorage;
 
-class ErrorsSessionStorage extends SessionStorage
+class RequestSessionStorage extends SessionStorage
 {    
     /**
-     * Create new instance of the ErrorsSessionStorage.
+     * Create new instance of the RequestSessionStorage.
      * 
      * @param string $name of storage
      * @return void
      */
-    public function __construct($name = 'errors')
+    public function __construct($name = 'old_input')
     {
         parent::__construct($name);
     }

@@ -4,6 +4,7 @@ namespace Core\Http;
 
 use Core\View\Template;
 use Core\Session\ErrorsSessionStorage;
+use Core\Session\RequestSessionStorage;
 
 class Response
 {
@@ -47,7 +48,7 @@ class Response
         $template = new Template("app/views/{$path}.view.php", $data);
         $content = $template->render();
 
-        return new static($content);
+        return (new static($content));
     }
 
     /**
@@ -58,7 +59,10 @@ class Response
      */
     public static function redirect($url)
     {
-        return (new static('Redirect'))->withStatus(302)->withHeader('Location', $url);
+        return (new static('Redirect'))
+            ->withStatus(302)
+            ->withHeader('Location', $url)
+            ->withOldInput();
     }
 
     /**
@@ -87,15 +91,28 @@ class Response
     }
 
     /**
-     * Set header for the web response.
+     * Save validation errors for the web response.
+     * 
+     * @param  array $errors
+     * @return $this
+     */
+    public function withErrors(array $errors)
+    {
+        (new ErrorsSessionStorage())->set($errors);
+
+        return $this;
+    }
+
+    /**
+     * Save old input for the web response.
      * 
      * @param  string $name
      * @param  string $value
      * @return $this
      */
-    public function withErrors($errors)
+    public function withOldInput()
     {
-        (new ErrorsSessionStorage())->setErrors($errors);
+        (new RequestSessionStorage())->set($_REQUEST);
 
         return $this;
     }

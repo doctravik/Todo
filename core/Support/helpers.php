@@ -2,6 +2,7 @@
 
 use Core\Collection\Collection;
 use Core\Session\ErrorsSessionStorage;
+use Core\Session\RequestSessionStorage;
 
 /**
  * Helper for output validation errors.
@@ -12,6 +13,20 @@ use Core\Session\ErrorsSessionStorage;
 function errors($errorName)
 {
     return new Collection((new ErrorsSessionStorage())->get($errorName));
+}
+
+/**
+ * Helper for old input.
+ * 
+ * @param  string $key
+ * @param  string $default value
+ * @return mixed
+ */
+function old($key, $default = '')
+{
+    $storage = new RequestSessionStorage;
+
+    return $storage->exists($key) ? $storage->get($key) : $default;
 }
 
 /**

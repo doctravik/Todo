@@ -97,7 +97,7 @@ class TaskController
         $attributes = $this->request->only(['content']);
 
         $validator = Validator::validate($attributes, [
-            'content' => ['required'],
+            'content' => ['required', ['unique' => 'tasks']],
         ]);
 
         if ($validator->failed()) {
