@@ -53,7 +53,7 @@ class Request
      */
     public function all()
     {
-        return $this->params[$key];
+        return $this->params;
     }
 
     /**
@@ -75,7 +75,7 @@ class Request
      */
     public function input($key)
     {
-        return $this->hasParam($key) ? $this->params[$key] : null;
+        return $this->exists($key) ? $this->params[$key] : null;
     }
 
     /**
@@ -84,7 +84,7 @@ class Request
      * @param  string  $key
      * @return boolean
      */
-    public function hasParam($key)
+    public function exists($key)
     {
         return isset($this->params[$key]);
     }

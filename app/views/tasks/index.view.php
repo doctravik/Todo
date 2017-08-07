@@ -1,5 +1,7 @@
 <?php $layout = 'app/views/layouts/app.view.php' ?>
 
+<?php isset($_SESSION['errors']) ? var_dump($_SESSION['errors']) : ''; ?>
+
 <form action="/tasks" method="POST">
     <div>
         <input type="text" name="username" placeholder="User name">

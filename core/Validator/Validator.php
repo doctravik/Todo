@@ -19,7 +19,7 @@ class Validator
     /**
      * @var array
      */
-    protected $allowedRules = ['required', 'email', 'unique'];
+    protected $allowedRules = ['required', 'email', 'unique', 'in'];
 
     /**
      * @var array
@@ -74,6 +74,11 @@ class Validator
         return $validator;
     }
 
+    /**
+     * Iterate all rules and parse it.
+     * 
+     * @return void
+     */
     protected function parseRules()
     {
         foreach ($this->clientRules as $attribute => $rules) {
@@ -87,8 +92,8 @@ class Validator
      * Check if attribute value comply with the rule.
      * 
      * @param  string $attribute
-     * @param  mixed $rule
-     * @param  string|null parameters
+     * @param  mixed  $rule
+     * @param  mixed  $parameters
      * @return [      
      */
     protected function validateAttribute($attribute, $rule, $parameters = null)
@@ -107,7 +112,7 @@ class Validator
         }
 
         if ($this->$method($attribute, $this->getAttributeValue($attribute), $parameters) == false) {
-            $this->setErrorMessage($attribute, $rule);
+            $this->setErrorMessage($attribute, $rule, $parameters);
         }
     }
 
@@ -126,25 +131,30 @@ class Validator
      * Add error messages to the validator's error list.
      * 
      * @param string $attribute
+     * @param  mixed  $parameters
      * @param string $rule
      */
-    protected function setErrorMessage($attribute, $rule)
+    protected function setErrorMessage($attribute, $rule, $parameters)
     {
-        $this->errors[$attribute][] = $this->errorMessages(ucwords($attribute))[$rule];
+        $this->errors[$attribute][] = $this->errorMessages(
+            ucwords($attribute), $parameters
+        )[$rule];
     }
 
     /**
      * List of error messages.
      * 
      * @param  string $attribute
+     * @param  mixed  $parameters
      * @return array
      */
-    protected function ErrorMessages($attribute = 'Undefined field')
+    protected function ErrorMessages($attribute = 'Undefined field', $parameters)
     {
         return [
             'required' => "$attribute is required",
             'email' => "$attribute should be a valid email address",
-            'unique' => "$attribute should be unique"
+            'unique' => "$attribute should be unique",
+            'in' => "$attribute should be only " . "'" . implode("', '", $parameters) . "'"
         ];
     }
 
@@ -185,6 +195,7 @@ class Validator
      *
      * @param  string  $attribute
      * @param  mixed   $value
+     * @param  string $parameters
      * @return boolean
      */
     protected function validateUnique($attribute, $value, $parameters)
@@ -197,5 +208,18 @@ class Validator
             ->count();
 
         return $count < 1;
-    }    
+    }
+
+    /**
+     * Field under validation must be included in the given list of values.
+     *
+     * @param  string  $attribute
+     * @param  mixed   $value
+     * @param  array  $parameters
+     * @return boolean
+     */
+    protected function validateIn($attribute, $value, $parameters)
+    {
+        return in_array($value, $parameters);
+    }  
 }

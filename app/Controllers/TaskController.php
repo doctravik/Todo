@@ -4,8 +4,10 @@ namespace App\Controllers;
 
 use Core\Container;
 use App\Models\Auth;
+use App\Models\Task;
 use Core\Http\Response;
 use Core\Database\Builder;
+use App\Filters\TaskFilter;
 use Core\Validator\Validator;
 use Core\Exceptions\NotAuthorisedException;
 
@@ -37,7 +39,18 @@ class TaskController
      */
     public function index()
     {
-        $tasks = $this->builder->table('tasks')->get();
+        $attributes = $this->request->only(['sort', 'order']);
+
+        $validator = Validator::validate($attributes, [
+            'sort' => [['in' => ['', 'content', 'username', 'email', 'is_completed']]],
+            'order' => [['in' => ['', 'asc', 'desc']]],
+        ]);
+        
+        if ($validator->failed()) {
+            return Response::redirect("/tasks")->withErrors($validator->getErrors());
+        }
+
+        $tasks = Task::sort(new TaskFilter)->get();
 
         return Response::view('tasks/index', compact('tasks'));
     }
