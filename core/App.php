@@ -7,6 +7,7 @@ use Core\Http\Request;
 use Core\Http\Response;
 use Core\Routing\Router;
 use Core\Database\Connection;
+use Core\Exceptions\NotAuthorisedException;
 use Core\Exceptions\RouteNotFoundException;
 
 class App
@@ -39,6 +40,8 @@ class App
             $response = $router->direct(parse_url($request->uri(), PHP_URL_PATH), $request->method());
         } catch (RouteNotFoundException $e) {
             $response = (new Response('Page not found'))->withStatus(404);
+        } catch (NotAuthorisedException $e) {
+            $response = (new Response('Forbidden'))->withStatus(403);
         }
         
         return $this->process($response);

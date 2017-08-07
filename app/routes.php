@@ -2,7 +2,7 @@
 
 $router->get('/tasks', 'TaskController@index');
 $router->post('/tasks', 'TaskController@store');
-$router->get('/tasks/{id}/edit', 'Admin\\TaskController@edit');
+$router->get('/tasks/{id}/edit', 'TaskController@edit');
 $router->post('/tasks/{id}', 'TaskController@update');
 
 $router->get('/admin', 'Auth\\LoginController@showLoginForm');

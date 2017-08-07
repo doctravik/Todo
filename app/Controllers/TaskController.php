@@ -3,9 +3,11 @@
 namespace App\Controllers;
 
 use Core\Container;
+use App\Models\Auth;
 use Core\Http\Response;
 use Core\Database\Builder;
 use Core\Validator\Validator;
+use Core\Exceptions\NotAuthorisedException;
 
 class TaskController
 {
@@ -66,12 +68,32 @@ class TaskController
     }
 
     /**
+     * Show edit form for the task.
+     * 
+     * @return Response
+     */
+    public function edit($id)
+    {
+        if (Auth::check()) {
+            throw new NotAuthorisedException;
+        }
+
+        $task = $this->db->table('tasks')->where('id', '=', $id)->get();
+        dd($task);
+        return Response::view("tasks/edit", $task);
+    }
+
+    /**
      * Update task in the database.
      * 
      * @return Response
      */
     public function update($id)
     {
+        if (Auth::check()) {
+            throw new NotAuthorisedException;
+        }
+
         $attributes = $this->request->only(['is_completed']);
 
         $this->builder->table('tasks')->where('id', '=', $id)->update([

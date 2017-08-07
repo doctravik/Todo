@@ -4,6 +4,14 @@ namespace Core\Routing;
 
 class Route
 {
+    /**
+     * Create new instance of the Route.
+     * 
+     * @param string $route
+     * @param string $uri 
+     * @param string $action
+     * @param string $regexp
+     */
     public function __construct($route, $uri, $action, $regexp = null)
     {
         $this->route = $route;
@@ -37,11 +45,24 @@ class Route
         return $this->parameters;
     }
 
+    /**
+     * Bind route parameters to uri values.
+     * 
+     * @return void
+     */
     public function bindRouteParameters()
     {
-        $this->parameters = array_combine($this->defineParameterNames(), $this->defineParameterValues());
+        $keys = $this->defineParameterNames();
+        $values = $this->defineParameterValues();
+
+        if (count($keys) === count($values)) {
+            $this->parameters = array_combine($keys, $values);
+        }
     }
 
+    /**
+     * @return array
+     */
     protected function defineParameterNames()
     {
         preg_match_all('/{(.+?)}/', $this->route, $matches);
@@ -49,12 +70,17 @@ class Route
         return $matches[1];
     }
 
+    /**
+     * @return array
+     */
     protected function defineParameterValues()
     {
         preg_match_all($this->regexp, $this->uri, $matches);
 
-        return call_user_func_array('array_merge', array_slice($matches, 1));
+        if ($parametersValues = array_slice($matches, 1)) {
+            return call_user_func_array('array_merge', array_slice($matches, 1));
+        }
+
+        return [];
     }
-
-
 }
