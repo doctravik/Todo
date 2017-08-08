@@ -45,12 +45,12 @@ class TaskController
             'sort' => [['in' => ['', 'content', 'username', 'email', 'is_completed']]],
             'order' => [['in' => ['', 'asc', 'desc']]],
         ]);
-        
+
         if ($validator->failed()) {
             return Response::redirect("/tasks")->withErrors($validator->getErrors());
         }
 
-        $tasks = Task::sort(new TaskFilter)->get();
+        $tasks = Task::sort(new TaskFilter)->paginate(3);
 
         return Response::view('tasks/index', compact('tasks'));
     }

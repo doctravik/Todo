@@ -42,3 +42,5 @@
         </li>
     <?php endforeach; ?>
 </ul>
+
+<?php includePartial("pagination/template.view.php", ['paginator' => $tasks]) ; ?>

@@ -41,3 +41,16 @@ function dd($value)
     die();
 }
 
+/**
+ * Include partial to the view.
+ *
+ * @param  array $data
+ * @return void
+ */
+function includePartial($path, array $data)
+{
+    extract($data);
+
+    require "./app/views/$path";
+}
+

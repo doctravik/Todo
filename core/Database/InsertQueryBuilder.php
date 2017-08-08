@@ -13,7 +13,7 @@ class InsertQueryBuilder
      */
     public static function prepare($table, array $data)
     {
-        return sprintf("INSERT INTO $table (%s) VALUES (%s)",
+        return sprintf("INSERT INTO $table (%s) VALUES (%s) ",
             implode(', ', array_keys($data)),
             implode(',', array_fill(1, count($data), '?'))
         );

@@ -17,6 +17,6 @@ class SelectQueryBuilder
             $columns = implode(', ', $columns);
         }
 
-        return "SELECT $columns FROM $table";
+        return "SELECT $columns FROM $table ";
     }
 }

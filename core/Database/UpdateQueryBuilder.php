@@ -17,7 +17,7 @@ class UpdateQueryBuilder
             return "$key = ?";
         }, array_keys($data));
 
-        return sprintf("UPDATE $table SET %s",
+        return sprintf("UPDATE $table SET %s ",
             implode(', ', $bindings)
         );
     }

@@ -3,17 +3,19 @@
 namespace Core\Database;
 
 use Core\Container;
+use Core\Pagination\Paginator;
 use Core\Database\DeleteQueryBuilder;
 use Core\Database\InsertQueryBuilder;
 use Core\Database\SelectQueryBuilder;
 use Core\Database\UpdateQueryBuilder;
+use Core\Pagination\CurrentPageResolver;
 
 class Builder
 {
     /**
      * @var \PDO
      */
-    private $db;
+    protected $db;
 
     /**
      * @var string
@@ -36,9 +38,16 @@ class Builder
     protected $query = '';
 
     /**
-     * @var string
+     * @var array
      */
-    protected $criteria = '';
+    protected $criteria = [];
+
+    /**
+     * Allowed criterias.
+     * 
+     * @var array
+     */
+    protected $allowedCriterias = ['where', 'and', 'orderBy', 'limit', 'offset'];
 
     /**
      * Binding parameters for the main statement.
@@ -98,9 +107,14 @@ class Builder
      */
     public function where($column, $operator, $value)
     {
-        $this->criteria .= " WHERE $column $operator ?";
+        if (isset($this->criteria['where']) && count($this->criteria['where']) > 0) {
+            $key = 'and';
+        } else {
+            $key = 'where';
+        }
 
-        array_push($this->criteriaBindings, $value);
+        $this->criteria[$key][] = "WHERE $column $operator ?";
+        $this->criteriaBindings[$key][] = $value;
 
         return $this;
     }
@@ -112,11 +126,52 @@ class Builder
      * @param  string $order
      * @return $this
      */
-    public function orderBy($column, $order)
+    public function orderBy($column, $order = 'asc')
     {
-        $this->criteria .= " ORDER BY $column $order";
+        $this->criteria['orderBy'][] = "ORDER BY $column $order";
 
         return $this;
+    }
+
+
+    /**
+     * Set LIMIT part of query.
+     * 
+     * @param  int $value
+     * @return $this
+     */
+    public function limit($value)
+    {
+        $this->criteria['limit'][] = "LIMIT ?";
+        $this->criteriaBindings['limit'][] = $value;
+
+
+        return $this;
+    }
+
+    /**
+     * Set OFFSET part of query.
+     * 
+     * @param  int $value
+     * @return $this
+     */
+    public function offset($value)
+    {
+        $this->criteria['offset'][] = "OFFSET ?";
+        $this->criteriaBindings['offset'][] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Alias for offset function.
+     * 
+     * @param  int $value
+     * @return $this
+     */
+    public function skip($value)
+    {
+        return $this->offset($value);
     }
 
     /**
@@ -175,16 +230,80 @@ class Builder
 
     /**
      * Execute count query.
-     * 
+     *
+     * @param  string $column
      * @return array
      */
-    public function count()
+    public function count($column = '*')
     {
-        $this->query = SelectQueryBuilder::prepare($this->table, $this->columns);
+        $this->query = SelectQueryBuilder::prepare($this->table, "count($column)");
 
         $response = $this->execute();
 
         return $response->fetchColumn();
+    }
+
+    /**
+     * Execute select query with pagination.
+     *
+     * @param  integer $perPage
+     * @return array
+     */
+    public function paginate($perPage = 10)
+    {
+        $page = $this->getCurrentPage();
+
+        $total = $this->getCountForPagination();
+        
+        $data = $total ? $this->getDataForPagination($page, $perPage) : [];
+
+        return (new Paginator($page, $perPage, $total, $data));
+    }
+
+    /**
+     * Get current page from uri.
+     * 
+     * @return int|null
+     */
+    protected function getCurrentPage()
+    {
+        return CurrentPageResolver::resolve() ?: 1;
+    }
+
+    /**
+     * Define total number of items before pagination.
+     * 
+     * @return int
+     */
+    protected function getCountForPagination()
+    {
+        $builder = clone $this;
+        $builder->setAllowedCriterias(['where', 'and']);
+
+        return $builder->count();
+    }
+
+    /**
+     * Set new values for allowed criterias.
+     * 
+     * @param array $criterias
+     * @return void
+     */
+    protected function setAllowedCriterias(array $criterias)
+    {
+        $this->allowedCriterias = $criterias;
+    }
+
+    /**
+     * Get paginated data.
+     *
+     * @param  int $page
+     * @param  int $perPage
+     * @return array
+     */
+    protected function getDataForPagination($page, $perPage)
+    {
+        return $this->limit($perPage)->skip(($page - 1) * $perPage)->get();
     }
 
     /**
@@ -194,8 +313,12 @@ class Builder
      */
     protected function execute()
     {
-        $query = $this->query . $this->criteria;
-        $bindings = array_merge($this->bindings, $this->criteriaBindings);
+        [$criterias, $criteriaBindings] = $this->prepareCriterias();
+
+        $query = $this->query . $criterias;
+
+        $bindings = array_merge($this->bindings, $criteriaBindings);
+
 var_dump($query);
 var_dump($bindings);
         try {
@@ -206,5 +329,29 @@ var_dump($bindings);
         } catch (\Exception $e) {
             die($e->getMessage());
         }
+    }
+
+    /**
+     * Combine criterias in one string by order.
+     * Combine criteriaBindings in one array by order.
+     * 
+     * @return array
+     */
+    protected function prepareCriterias()
+    {
+        $query = '';
+        $bindings = [];
+
+        foreach ($this->allowedCriterias as $name) {
+            if (isset($this->criteria[$name])) {
+                $query .= ' ' . implode(' ', $this->criteria[$name]);
+            }
+
+            if (isset($this->criteriaBindings[$name])) {
+                array_push($bindings, ...$this->criteriaBindings[$name]);
+            }
+        }
+
+        return [$query, $bindings];
     }
 }

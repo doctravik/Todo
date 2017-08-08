@@ -203,7 +203,6 @@ class Validator
         $builder = new Builder;
         
         $count = $builder->table($parameters)
-            ->select('count(*)')
             ->where($attribute, '=', $value)
             ->count();
 

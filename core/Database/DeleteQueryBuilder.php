@@ -12,6 +12,6 @@ class DeleteQueryBuilder
      */
     public static function prepare($table)
     {
-        return "DELETE FROM $table";
+        return "DELETE FROM $table ";
     }
 }
