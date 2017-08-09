@@ -13,7 +13,9 @@
     <div>
         <?php require('partials/nav.view.php'); ?>
 
-        <?= $content; ?>
+        <div class="container">
+            <?= $content; ?>
+        </div>
         
         <?php require('partials/footer.view.php'); ?>
     </div>

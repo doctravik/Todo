@@ -29,8 +29,7 @@
                             document.getElementById('logout-form').submit();">Logout
                         </a>
 
-                        <form action="/admin/logout" method="post" id="logout-form" >
-                        </form>
+                        <form action="/admin/logout" method="post" id="logout-form"></form>
                     </li>
                 <?php else : ?>
                     <li><a href="/admin">Admin</a></li>
