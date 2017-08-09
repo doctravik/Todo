@@ -3,6 +3,7 @@
 namespace Core\Validator;
 
 use Core\Database\Builder;
+use Core\File\UploadedFile;
 
 class Validator
 {
@@ -19,7 +20,7 @@ class Validator
     /**
      * @var array
      */
-    protected $allowedRules = ['required', 'email', 'unique', 'in'];
+    protected $allowedRules = ['required', 'email', 'unique', 'in', 'mimes', 'max'];
 
     /**
      * @var array
@@ -154,7 +155,9 @@ class Validator
             'required' => "$attribute is required",
             'email' => "$attribute should be a valid email address",
             'unique' => "$attribute should be unique",
-            'in' => "$attribute should be only " . "'" . implode("', '", $parameters) . "'"
+            'in' => "$attribute should be only " . "'" . implode("', '", $parameters) . "'",
+            'mimes' => "$attribute should be only type of $parameters",
+            'max' => "$attribute should be less then $parameters Kb"
         ];
     }
 
@@ -172,6 +175,8 @@ class Validator
         } elseif (is_string($value) && trim($value) === '') {
             return false;
         } elseif ($value instanceof File) {
+            return (string) $value->getPath() != '';
+        } elseif ($value instanceof UploadedFile) {
             return (string) $value->getPath() != '';
         }
 
@@ -220,5 +225,49 @@ class Validator
     protected function validateIn($attribute, $value, $parameters)
     {
         return in_array($value, $parameters);
+    }
+
+    /**
+     * Image must be type of the given values.
+     *
+     * @param  string  $attribute
+     * @param  mixed   $value
+     * @param  array  $parameters
+     * @return boolean
+     */
+    protected function validateMimes($attribute, $value, $parameters)
+    {
+        if (! $value instanceof UploadedFile || ! $value->isValid()) {
+            return false;
+        }
+
+        $mimeUnderValidation = getimagesize($value->getPath())['mime'];
+
+        foreach (explode(',', $parameters) as $mimeRule) {
+            if (strpos($mimeUnderValidation, $mimeRule)) {
+                return true;
+                break;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Image must be less than the given size.
+     *
+     * @param  string  $attribute
+     * @param  mixed   $value
+     * @param  array  $parameters
+     * @return boolean
+     */
+    protected function validateMax($attribute, $value, $parameters)
+    {
+        if ($value instanceof UploadedFile && $value->isValid()) {
+            return $value->getSize() <= $parameters * 1024;
+        }
+
+        return false;
     }  
+
 }

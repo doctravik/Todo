@@ -62,4 +62,14 @@ class Collection implements Countable
     {
         return $this->items[0] ?? $default;
     }
+
+    /**
+     * Check if the collection exists.
+     * 
+     * @return boolean
+     */
+    public function exists()
+    {
+        return ! empty($this->items);
+    }
 }

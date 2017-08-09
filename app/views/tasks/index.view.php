@@ -2,21 +2,7 @@
 
 <?php isset($_SESSION['errors']) ? var_dump($_SESSION['errors']) : ''; ?>
 
-<form action="/tasks" method="POST">
-    <div>
-        <input type="text" name="username" placeholder="User name">
-        <span><?= errors('username')->first() ; ?></span>
-    </div>
-    <div>
-        <input type="email" name="email" placeholder="Email">
-        <span><?= errors('email')->first() ; ?></span>        
-    </div>
-    <div>
-        <textarea name="content" placeholder="Task content"></textarea>
-        <span><?= errors('content')->first() ; ?></span>          
-    </div>
-    <button type="submit">Create task</button>
-</form>
+<?php includePartial("tasks/create.view.php") ; ?>
 
 <h1>Tasks</h1>
 <ul>
@@ -39,6 +25,8 @@
             <?php if (\App\Models\Auth::check()) : ?>
                 <a href=<?="/tasks/{$task->id}/edit"; ?>>Edit</a>
             <?php endif; ?>
+
+            <?php includePartial("images/upload.view.php", compact('task')) ; ?>
         </li>
     <?php endforeach; ?>
 </ul>

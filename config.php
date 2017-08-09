@@ -12,6 +12,9 @@ return [
             PDO::ATTR_EMULATE_PREPARES => false
         ]
     ],
+    'image' => [
+        'upload' => 'app/public/images'
+    ],
 
-    'routes' => 'app/routes.php'
+    'routes' => 'app/routes.php',
 ];

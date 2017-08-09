@@ -1,5 +1,6 @@
 <?php
 
+use Core\Container;
 use Core\Collection\Collection;
 use Core\Session\ErrorsSessionStorage;
 use Core\Session\RequestSessionStorage;
@@ -47,10 +48,21 @@ function dd($value)
  * @param  array $data
  * @return void
  */
-function includePartial($path, array $data)
+function includePartial($path, array $data = [])
 {
     extract($data);
 
     require "./app/views/$path";
+}
+
+/**
+ * Get config.
+ *
+ * @param  string $key
+ * @return mixed
+ */
+function config($key)
+{
+    return Container::instance()->config[$key];
 }
 
