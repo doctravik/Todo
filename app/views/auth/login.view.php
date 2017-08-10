@@ -21,7 +21,7 @@
                     </div>
 
                     <div class="form-group <?= errors('password')->exists() ? 'has-error' : '' ; ?>">
-                        <label for="password" class="control-label">password</label>
+                        <label for="password" class="control-label">Password</label>
                         <input type="password" id="password" name="password" class="form-control"  
                             value="<?= htmlspecialchars(old('password')) ; ?>" autofocus>
 

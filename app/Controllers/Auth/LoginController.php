@@ -3,6 +3,7 @@
 namespace App\Controllers\Auth;
 
 use App\Models\Auth;
+use App\Models\User;
 use Core\Http\Response;
 use Core\Validator\Validator;
 use App\Controllers\Controller;
@@ -41,7 +42,13 @@ class LoginController extends Controller
             return Response::redirect("/admin")->withErrors($validator->getErrors());
         }
 
-        if ($this->verifyCredentials($attributes) == false) {
+        if ($user = User::findByUsername($this->request->input('username'))) {
+            return Response::redirect("/admin")->withErrors([
+                'username' => ['Could not find user with such credentials.']
+            ]);
+        }
+
+        if ($user->isAdmin() && $this->verifyCredentials($user, $attributes) == false) {
             return Response::redirect("/admin")->withErrors([
                 'username' => ['Your credentials were not verified.']
             ]);
@@ -66,12 +73,13 @@ class LoginController extends Controller
 
     /**
      * Check if credentials are valid.
-     * 
+     *
+     * @param  object $user
      * @param  array $credentials
      * @return boolean
      */
-    protected function verifyCredentials($credentials)
+    protected function verifyCredentials($user, $credentials)
     {
-        return $credentials['username'] === 'admin' && $credentials['password'] === '123';
+        return password_verify($credentials['password'], $user->password);
     }
 }
