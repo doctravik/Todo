@@ -4,9 +4,10 @@ namespace App\Controllers;
 
 use App\Models\Auth;
 use Core\Http\Response;
+use App\Controllers\Controller;
 use Core\Exceptions\NotAuthorisedException;
 
-class StatusController
+class StatusController extends Controller
 {
     /**
      * Update status of the task in the database.

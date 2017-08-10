@@ -2,33 +2,13 @@
 
 namespace App\Controllers\Auth;
 
-use Core\Container;
 use App\Models\Auth;
 use Core\Http\Response;
-use Core\Database\Builder;
 use Core\Validator\Validator;
+use App\Controllers\Controller;
 
-class LoginController
+class LoginController extends Controller
 {
-    /**
-     * @var Core\Http\Request
-     */
-    private $request;
-
-    /**
-     * @var Builder
-     */
-    private $builder;
-
-    /**
-     * Create instance of Controller.
-     */
-    public function __construct()
-    {
-        $this->request = Container::instance()->request;
-        $this->builder = new Builder;
-    }
-
     /**
      * Show login form for admin.
      * 
