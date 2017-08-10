@@ -20,8 +20,6 @@ class StatusController extends Controller
             throw new NotAuthorisedException;
         }
 
-        $attributes = $this->request->only(['is_completed']);
-
         $this->builder->table('tasks')->where('id', '=', $id)->update([
             'is_completed' => (bool) $this->request->input('is_completed') ?: 0
         ]);

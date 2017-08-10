@@ -47,7 +47,7 @@ class Builder
      * 
      * @var array
      */
-    protected $allowedCriterias = ['where', 'and', 'orderBy', 'limit', 'offset'];
+    protected $allowedCriterias = ['join', 'where', 'and', 'orderBy', 'limit', 'offset'];
 
     /**
      * Binding parameters for the main statement.
@@ -172,6 +172,22 @@ class Builder
     public function skip($value)
     {
         return $this->offset($value);
+    }
+
+    /**
+     * Build INNER JOIN query.
+     * 
+     * @param  string $table
+     * @param  string $leftColumn
+     * @param  string $operator
+     * @param  string $rightColumn
+     * @return $this
+     */
+    public function join($table, $leftColumn, $operator, $rightColumn)
+    {
+        $this->criteria['join'][] = "INNER JOIN {$table} ON $leftColumn $operator $rightColumn";
+
+        return $this;
     }
 
     /**

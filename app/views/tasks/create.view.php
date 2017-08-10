@@ -8,28 +8,27 @@
             </div>
             <div class="panel-body">
                 <form action="/tasks" method="POST" class="form" enctype="multipart/form-data">
-                    <div class="form-group <?= errors('username')->exists() ? 'has-error' : '' ; ?>">
-                        <label for="form-username" class="control-label">Username</label>
-                        <input type="text" id="form-username" name="username" class="form-control"  
-                            value="<?= htmlspecialchars(old('username')) ; ?>" autofocus>
+                    <div class="form-group <?= errors('user_id')->exists() ? 'has-error' : '' ; ?>">
+                        <label for="form-userId" class="control-label">Username</label>
+                        <select class="form-control" name="user_id" id="form-userId">
+                            <option value="">Select user</option>
+                            <?php foreach($users as $user) : ?>
+                                <option value="<?= $user->id ; ?>"
+                                    <?= (htmlspecialchars(old('user_id')) == $user->id) ? 'selected' : ''; ?>><?= htmlspecialchars($user->username) ; ?>
+                                </option>
+                            <?php endforeach ; ?>
+                        </select>
 
-                        <?php if(errors('username')->exists()) : ?>
+                        <?php if(errors('user_id')->exists()) : ?>
                             <span class="help-block">
-                                <strong><?= errors('username')->first() ; ?></strong>
+                                <strong><?= errors('user_id')->first() ; ?></strong>
                             </span>
                         <?php endif ; ?>
                     </div>
                     
-                    <div class="form-group <?= errors('email')->exists() ? 'has-error' : '' ;?>">
+                    <div class="form-group">
                         <label for="form-email" class="control-label">Email</label>
-                        <input type="email" id="form-email" name="email" class="form-control" 
-                            value="<?= htmlspecialchars(old('email')) ; ?>" >
-
-                        <?php if(errors('email')->exists()) : ?>
-                            <span class="help-block">
-                                <strong><?= errors('email')->first() ; ?></strong>
-                            </span>
-                        <?php endif ; ?>
+                        <input type="email" id="form-email" name="email" class="form-control" readonly>
                     </div>
 
                     <div class="form-group <?= errors('content')->exists() ? 'has-error' : '' ;?>">
@@ -67,10 +66,23 @@
 <?php includePartial("tasks/partials/preview-modal.view.php") ; ?>
 
 <script>
+    var users = <?php echo json_encode($users) ; ?>;
+
+    $(document).ready(updateEmail);
+    $('#form-userId').on('click', updateEmail);
+
+    function updateEmail() {
+        var user = users.filter(function(user) {
+            return user.id == $('#form-userId').val();
+        });
+
+        var email = user[0] && user[0].email;
+        $('#form-email').val(email); 
+    }
     $('#previewCreateModal').on('show.bs.modal', function (event) {
         var modal = $(this);
         modal.find('.modal-body #content').text($('#form-content').val());
-        modal.find('.modal-body #username').text($('#form-username').val());
+        modal.find('.modal-body #username').text($('#form-userId option:selected').text());
         modal.find('.modal-body #email').text($('#form-email').val());
         previewImage(document.getElementById('form-file'));
     });

@@ -20,7 +20,9 @@ class Validator
     /**
      * @var array
      */
-    protected $allowedRules = ['required', 'maybeRequired', 'email', 'unique', 'in', 'mimes', 'max'];
+    protected $allowedRules = [
+        'required', 'maybeRequired', 'email', 'unique', 'in', 'mimes', 'max', 'exists'
+    ];
 
     /**
      * @var array
@@ -180,7 +182,7 @@ class Validator
     protected function setErrorMessage($attribute, $rule, $parameters)
     {
         $this->errors[$attribute][] = $this->errorMessages(
-            ucwords($attribute), $parameters
+            $attribute, $parameters
         )[$rule];
     }
 
@@ -194,13 +196,14 @@ class Validator
     protected function ErrorMessages($attribute = 'Undefined field', $parameters)
     {
         return [
-            'required' => "$attribute is required",
-            'maybeRequired' => "",
             'email' => "$attribute should be a valid email address",
-            'unique' => "$attribute should be unique",
+            'exists' => "$attribute should exists in table $parameters",
             'in' => "$attribute should be only $parameters",
+            'max' => "$attribute should be less then $parameters Kb",            
+            'maybeRequired' => "",
             'mimes' => "$attribute should be only type of $parameters",
-            'max' => "$attribute should be less then $parameters Kb"
+            'required' => "$attribute is required",
+            'unique' => "$attribute should be unique",
         ];
     }
 
@@ -326,4 +329,24 @@ class Validator
         return false;
     }  
 
+    /**
+     * Validate that an attribute exists in the table.
+     *
+     * @param  string  $attribute
+     * @param  mixed   $value
+     * @param  string $parameters
+     * @return boolean
+     */
+    protected function validateExists($attribute, $value, $parameters)
+    {
+        $builder = new Builder;
+        
+        [$table, $column] = explode(':', $parameters);
+
+        $count = $builder->table($table)
+            ->where($column, '=', $value)
+            ->count();
+
+        return $count >= 1;
+    }
 }

@@ -44,7 +44,9 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return Response::view("tasks/create");
+        $users = $this->builder->table('users')->get();
+
+        return Response::view("tasks/create", compact('users'));
     }
 
     /**
@@ -54,28 +56,26 @@ class TaskController extends Controller
      */
     public function store()
     {
-        $attributes = $this->request->only(['content', 'username','email', 'image']);
+        $attributes = $this->request->only(['content', 'user_id', 'image']);
 
         $validator = Validator::validate($attributes, [
             'content' => ['required'],
-            'image' => ['maybeRequired', ['mimes' => 'jpeg,jpg,gif,png'], ['max' => '2048']],
-            'username' => ['required'],
-            'email' => ['required', 'email', ['unique' => 'tasks']]
+            'user_id' => ['required', ['exists' => 'users:id']],
+            'image' => ['maybeRequired', ['mimes' => 'jpeg,jpg,gif,png'], ['max' => '2048']]
         ]);
 
         if ($validator->failed()) {
             return Response::redirect("/tasks/create")->withErrors($validator->getErrors());
         }
 
-        $image = Image::createFromPath($this->request->input('image')->getPath());
-        $path = (new ImageHandler($image))->resize()->save();
-
-        if (! $path) {
-            return Response::redirect("/tasks")
-                ->withErrors(['image', 'Could not recieve path of the image']);
+        if( $this->request->input('image')->getPath()) {
+            $image = Image::createFromPath($this->request->input('image')->getPath());
+            $path = (new ImageHandler($image))->resize()->save();
         }
 
-        Task::create(array_merge($attributes, ['image' => $path]));
+        Task::create(array_merge($attributes, [
+            'image' => $path ?? null
+        ]));
 
         return Response::redirect("/tasks");
     }

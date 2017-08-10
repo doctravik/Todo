@@ -23,7 +23,8 @@ class Task
         $task = new static;
 
         return $filter->apply(
-            (new Builder)->table($task->table)
+            (new Builder)->table($task->table)->select('tasks.*', 'username', 'email')
+                ->join('users', 'users.id', '=', 'tasks.user_id')
         );
     }
 
