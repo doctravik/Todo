@@ -44,7 +44,7 @@ class SessionStorage
      */
     public function get($key, $default = null)
     {
-        return $this->exists($key) ? $_SESSION[$this->name][$key] : $default;
+        return $this->has($key) ? $_SESSION[$this->name][$key] : $default;
     }
 
     /**
@@ -53,7 +53,7 @@ class SessionStorage
      * @param  string $key
      * @return boolean
      */
-    public function exists($key)
+    public function has($key)
     {
         return isset($_SESSION[$this->name][$key]);
     }
@@ -81,6 +81,26 @@ class SessionStorage
         if($this->exists($key)) {
            unset($_SESSION[$this->name][$key]);
         }
+    }
+
+    /**
+     * Get all items from the session.
+     * 
+     * @return array
+     */
+    public function all() 
+    {
+        return $_SESSION[$this->name];
+    }
+
+    /**
+     * Check if session has errors and it is not empty.
+     * 
+     * @return boolean
+     */
+    public function exists() 
+    {
+        return isset($_SESSION[$this->name]) && count($_SESSION[$this->name]) > 0;
     }
 
     /**

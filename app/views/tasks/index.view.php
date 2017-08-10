@@ -1,8 +1,6 @@
 <?php $layout = 'app/views/layouts/app.view.php' ?>
 
-<?php isset($_SESSION['errors']) ? var_dump($_SESSION['errors']) : ''; ?>
-<br>
-<?php isset($_SESSION['old_input']) ? var_dump($_SESSION['old_input']) : ''; ?>
+<?php includePartial("tasks/partials/errors.view.php") ; ?>
 
 <div class="row">
     <div class="col-md-12">
@@ -12,8 +10,7 @@
             </div>
             <div class="panel-body">
                 <table class="table">
-                    <?php includePartial("tasks/partials/headers.view.php") ; ?>
-                    
+                    <?php includePartial("tasks/partials/headers.view.php") ; ?>          
                     <tbody>
                         <?php foreach($tasks as $task) : ?>
                             <?php includePartial("tasks/partials/task.view.php", compact('task')) ; ?>

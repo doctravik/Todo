@@ -11,9 +11,13 @@ use Core\Session\RequestSessionStorage;
  * @param  string $errorName
  * @return string
  */
-function errors($errorName)
+function errors($errorName = null)
 {
-    return new Collection((new ErrorsSessionStorage())->get($errorName));
+    if ($errorName) {
+        return new Collection((new ErrorsSessionStorage())->get($errorName));    
+    }
+
+    return new ErrorsSessionStorage();
 }
 
 /**
@@ -27,7 +31,7 @@ function old($key, $default = '')
 {
     $storage = new RequestSessionStorage;
 
-    return $storage->exists($key) ? $storage->get($key) : $default;
+    return $storage->has($key) ? $storage->get($key) : $default;
 }
 
 /**
