@@ -26,7 +26,7 @@
 
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">
-                <?php if (\App\Models\Auth::check()) : ?>
+                <?php if (auth()->check()) : ?>
                     <li>
                         <a href="#" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">Logout
@@ -35,6 +35,7 @@
                         <form action="/admin/logout" method="post" id="logout-form"></form>
                     </li>
                 <?php else : ?>
+                    <li><a href="/register">Register</a></li>
                     <li><a href="/admin">Admin</a></li>
                 <?php endif; ?>
             </ul>

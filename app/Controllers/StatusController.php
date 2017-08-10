@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\Auth;
+use Core\Auth\Auth;
 use Core\Http\Response;
 use App\Controllers\Controller;
 use Core\Exceptions\NotAuthorisedException;

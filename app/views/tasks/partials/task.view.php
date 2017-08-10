@@ -1,5 +1,5 @@
 <tr>
-    <?php if (\App\Models\Auth::check()) : ?>
+    <?php if (auth()->check()) : ?>
         <td>
             <form action=<?="/tasks/{$task->id}/status/update";?> method="POST">
                 <input type="checkbox" name="is_completed"
@@ -20,7 +20,7 @@
             <image src="<?= $task->image ;?>" class="img-responsive" alt="image" style="height: 50px">
         <?php endif ; ?>
     </td>
-    <?php if (\App\Models\Auth::check()) : ?>
+    <?php if (auth()->check()) : ?>
         <td>
             <a href="#" data-toggle="modal" data-target="#editModal" class="btn btn-default"
                 data-id="<?= htmlspecialchars($task->id) ;?>" 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Core\Auth\Hasher;
 use Core\Database\Builder;
 
 class User
@@ -22,9 +23,30 @@ class User
     public static function findByUsername($username)
     {
         $user = new static;
-// dd($username);
-        return (new Builder)->table($user->table)
+
+        $users = (new Builder)->table($user->table)
             ->where('username', '=', $username)
-            ->get()[0];
+            ->get();
+
+        if ($users) {
+            return $users[0];
+        }
+
+        return null;
+    }
+
+    /**
+     * Register user in db.
+     * 
+     * @param  array $attributes
+     * @return boolean
+     */
+    public static function register($attributes)
+    {
+        $user = new static;
+
+        return (new Builder)->table($user->table)->insert(
+            array_merge($attributes, ['password' => Hasher::crypt($attributes['password'])])
+        );
     }
 }

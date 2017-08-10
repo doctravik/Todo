@@ -1,5 +1,5 @@
 <thead>
-    <?php if (\App\Models\Auth::check()) : ?>
+    <?php if (auth()->check()) : ?>
         <th></th>
     <?php endif ; ?>
     <th>Task
@@ -35,7 +35,7 @@
         </a>
     </th>
     <th>Image</th>
-    <?php if (\App\Models\Auth::check()) : ?>
+    <?php if (auth()->check()) : ?>
         <th>Actions</th>
     <?php endif ; ?>
 </thead>

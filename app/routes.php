@@ -9,6 +9,9 @@ $router->post('/tasks/{id}/update', 'TaskController@update');
 $router->post('/tasks/{id}/status/update', 'StatusController@update');
 $router->post('/tasks/{id}/image/upload', 'ImageController@store');
 
+$router->get('/register', 'Auth\\RegisterController@showRegisterForm');
+$router->post('/register', 'Auth\\RegisterController@register');
+
 $router->get('/admin', 'Auth\\LoginController@showLoginForm');
 $router->post('/admin/login', 'Auth\\LoginController@login');
 $router->post('/admin/logout', 'Auth\\LoginController@logout');

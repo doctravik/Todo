@@ -1,5 +1,6 @@
 <?php
 
+use Core\Auth\Auth;
 use Core\Container;
 use Core\Collection\Collection;
 use Core\Session\ErrorsSessionStorage;
@@ -70,3 +71,12 @@ function config($key)
     return Container::instance()->config[$key];
 }
 
+/**
+ * Create auth handler.
+ * 
+ * @return Auth
+ */
+function auth()
+{
+    return (new Auth);
+}

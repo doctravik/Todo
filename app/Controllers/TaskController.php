@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\Auth;
+use Core\Auth\Auth;
 use App\Models\Task;
 use Core\Http\Response;
 use App\Filters\TaskFilter;
