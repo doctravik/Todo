@@ -154,7 +154,7 @@ class Image
     protected function getExtension()
     {
         return pathinfo($this->path, PATHINFO_EXTENSION) 
-                    ?: $this->getExtensionFromType()[$this->type];
+            ?: $this->getExtensionFromType()[$this->type];
     }
 
     /**

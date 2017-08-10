@@ -29,7 +29,8 @@ class Task
 
     /**
      * Save task in the database.
-     * 
+     *
+     * @param array $attributes
      * @return void
      */
     public static function create(array $attributes)
