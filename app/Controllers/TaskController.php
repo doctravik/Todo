@@ -96,9 +96,7 @@ class TaskController
                 ->withErrors(['image', 'Could not recieve path of the image']);
         }
 
-        $this->builder->table('tasks')->insert(
-            array_merge($attributes, ['image' => $path])
-        );
+        Task::create(array_merge($attributes, ['image' => $path]));
 
         return Response::redirect("/tasks");
     }

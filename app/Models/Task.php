@@ -26,4 +26,14 @@ class Task
             (new Builder)->table($task->table)
         );
     }
+
+    /**
+     * Save task in the database.
+     * 
+     * @return void
+     */
+    public static function create(array $attributes)
+    {
+        (new Builder)->table('tasks')->insert($attributes);
+    }
 }
