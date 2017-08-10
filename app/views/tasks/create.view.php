@@ -45,12 +45,12 @@
                         <?php endif ; ?>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group <?= errors('image')->exists() ? 'has-error' : '' ;?>">
                         <label for="form-file" class="control-label">Image</label>
                         <input type="file" id="form-file" name="image">
-                        
+
                         <?php if(errors('image')->exists()) : ?>
-                            <span>
+                            <span class="help-block">
                                 <strong><?= errors('image')->first() ; ?></strong>
                             </span>
                         <?php endif ; ?>

@@ -8,6 +8,7 @@ use App\Models\Task;
 use Core\Http\Response;
 use Core\Database\Builder;
 use App\Filters\TaskFilter;
+use Core\File\UploadedFile;
 use Core\Validator\Validator;
 use Core\Exceptions\NotAuthorisedException;
 
@@ -42,8 +43,8 @@ class TaskController
         $attributes = $this->request->only(['sort', 'order']);
 
         $validator = Validator::validate($attributes, [
-            'sort' => [['in' => ['', 'content', 'username', 'email', 'is_completed']]],
-            'order' => [['in' => ['', 'asc', 'desc']]],
+            'sort' => ['maybeRequired', ['in' => 'content,username,email,is_completed']],
+            'order' => ['maybeRequired', ['in' => 'asc,desc']]
         ]);
 
         if ($validator->failed()) {
@@ -72,13 +73,13 @@ class TaskController
      */
     public function store()
     {
-        $attributes = $this->request->only(['content', 'username','email']);
-        
+        $attributes = $this->request->only(['content', 'username','email', 'image']);
+
         $validator = Validator::validate($attributes, [
             'content' => ['required'],
+            'image' => ['maybeRequired', ['mimes' => 'jpeg,jpg,gif,png'], ['max' => '2048']],
             'username' => ['required'],
-            'email' => ['required', 'email', ['unique' => 'tasks']],
-            'image' => ['required', ['mimes' => 'jpeg,jpg,gif,png'], ['max' => '2048']]
+            'email' => ['required', 'email', ['unique' => 'tasks']]
         ]);
 
         if ($validator->failed()) {

@@ -20,7 +20,7 @@ class Validator
     /**
      * @var array
      */
-    protected $allowedRules = ['required', 'email', 'unique', 'in', 'mimes', 'max'];
+    protected $allowedRules = ['required', 'maybeRequired', 'email', 'unique', 'in', 'mimes', 'max'];
 
     /**
      * @var array
@@ -84,9 +84,56 @@ class Validator
     {
         foreach ($this->clientRules as $attribute => $rules) {
             foreach ($rules as $rule) {
-                $this->validateAttribute($attribute, $rule);
+                [$rule, $parameters] = $this->parseRule($rule);
+
+                if ($this->shouldStopValidateAtrribute($attribute, $rule, $parameters)) {         
+                    continue 2;
+                }
+
+                $this->validateAttribute($attribute, $rule, $parameters);
             }
         }
+    }
+
+    /**
+     * Check if attribute has no need further validation.
+     * 
+     * @param  string $attribute
+     * @param  mixed  $rule
+     * @param  mixed  $parameters
+     * @return boolean
+     */
+    protected function shouldStopValidateAtrribute($attribute, $rule, $parameters)
+    {
+        $value = $this->getAttributeValue($attribute);
+
+        if ($rule === 'maybeRequired' && $value === null) {
+                return true;
+        }
+
+        if ($rule === 'maybeRequired' && $value instanceof UploadedFile 
+            && empty($value->getPath())) {
+                return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Parse rule if it is array.
+     * 
+     * @param  mixes $rule
+     * @param  mixed $parameters
+     * @return array
+     */
+    protected function parseRule($rule, $parameters = null)
+    {
+        if (is_array($rule)) {
+            $parameters = $rule[$key = key($rule)];
+            $rule = $key;
+        }
+
+        return [$rule, $parameters];
     }
 
     /**
@@ -95,15 +142,10 @@ class Validator
      * @param  string $attribute
      * @param  mixed  $rule
      * @param  mixed  $parameters
-     * @return [      
+     * @return void    
      */
-    protected function validateAttribute($attribute, $rule, $parameters = null)
+    protected function validateAttribute($attribute, $rule, $parameters)
     {
-        if (is_array($rule)) {
-            $parameters = $rule[$key = key($rule)];
-            $rule = $key;
-        }
-
         if (! in_array($rule, $this->allowedRules)) {
             return;
         }
@@ -153,9 +195,10 @@ class Validator
     {
         return [
             'required' => "$attribute is required",
+            'maybeRequired' => "",
             'email' => "$attribute should be a valid email address",
             'unique' => "$attribute should be unique",
-            'in' => "$attribute should be only " . "'" . implode("', '", $parameters) . "'",
+            'in' => "$attribute should be only $parameters",
             'mimes' => "$attribute should be only type of $parameters",
             'max' => "$attribute should be less then $parameters Kb"
         ];
@@ -180,6 +223,19 @@ class Validator
             return (string) $value->getPath() != '';
         }
 
+        return true;
+    }
+
+    /**
+     * Validation need only of value of attribute is not null.
+     * Always accept true as this rule used only for defining is the next rules should be checked.
+     *
+     * @param  string  $attribute
+     * @param  mixed   $value
+     * @return boolean
+     */
+    protected function validateMaybeRequired($attribute, $value)
+    {
         return true;
     }
 
@@ -224,7 +280,7 @@ class Validator
      */
     protected function validateIn($attribute, $value, $parameters)
     {
-        return in_array($value, $parameters);
+        return in_array($value, explode(',', $parameters));
     }
 
     /**

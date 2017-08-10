@@ -2,6 +2,8 @@
 
 namespace Core\Http;
 
+use Core\File\UploadedFile;
+
 class Request
 {
     /**
@@ -24,6 +26,24 @@ class Request
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->uri = $_SERVER['REQUEST_URI'];
         $this->params = $_REQUEST;
+
+        $this->setFiles();
+    }
+
+    /**
+     * Put files from $_FILES to Request.
+     *
+     * @return void
+     */
+    protected function setFiles()
+    {
+        if (! count($_FILES)) {
+            return false;
+        }
+
+        foreach ($_FILES as $key => $value) {
+            $this->params[$key] = new UploadedFile($value);
+        }
     }
 
     /**
