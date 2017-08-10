@@ -1,6 +1,7 @@
 <?php
 
 $router->get('/tasks', 'TaskController@index');
+$router->get('/tasks/create', 'TaskController@create');
 $router->post('/tasks', 'TaskController@store');
 $router->get('/tasks/{id}/edit', 'TaskController@edit');
 $router->post('/tasks/{id}/update', 'TaskController@update');

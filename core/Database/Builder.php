@@ -255,9 +255,11 @@ class Builder
 
         $total = $this->getCountForPagination();
         
-        $data = $total ? $this->getDataForPagination($page, $perPage) : [];
+        $paginator = new Paginator($page, $perPage, $total);
+        
+        $data = $total ? $this->getDataForPagination($paginator->currentPage(), $perPage) : [];
 
-        return (new Paginator($page, $perPage, $total, $data));
+        return $paginator->setData($data);
     }
 
     /**

@@ -3,7 +3,7 @@
 namespace Core\Pagination;
 
 use ArrayIterator;
-use Core\Container;
+use Core\Http\Request;
 use IteratorAggregate;
 
 class Paginator implements IteratorAggregate
@@ -61,17 +61,15 @@ class Paginator implements IteratorAggregate
      * @param int $currentPage
      * @param int $perPage
      * @param int $total
-     * @param array $data
      */
-    public function __construct($currentPage, $perPage, $total, array $data)
+    public function __construct($currentPage, $perPage, $total)
     {
         $this->perPage = $perPage;
         $this->total = $total;
         $this->lastPage = (int) ceil($total / $perPage);
         $this->currentPage = $this->normalizeCurrentPage($currentPage);
-        $this->data = $data;
 
-        $this->urlQueries = Container::instance()->request->all();
+        $this->urlQueries = (new Request)->all();
     }
 
     /**
@@ -79,7 +77,7 @@ class Paginator implements IteratorAggregate
      * 
      * @return void
      */
-    public function normalizeCurrentPage($currentPage)
+    protected function normalizeCurrentPage($currentPage)
     {
         if ($currentPage > $this->lastPage) {
             return $this->lastPage;
@@ -90,6 +88,19 @@ class Paginator implements IteratorAggregate
         }
 
         return $currentPage;
+    }
+
+    /**
+     * Set data for paginator.
+     * 
+     * @param array $data
+     * @return $this
+     */
+    public function setData(array $data)
+    {
+        $this->data = $data;
+
+        return $this;
     }
 
     /**
@@ -186,6 +197,16 @@ class Paginator implements IteratorAggregate
     }
 
     /**
+     * Render links for pagination.
+     * 
+     * @return string
+     */
+    public function getIterator()
+    {
+        return new ArrayIterator($this->data);
+    }
+
+    /**
      * Create url for the page.
      * 
      * @param  int $page
@@ -200,15 +221,5 @@ class Paginator implements IteratorAggregate
         $parameters = array_merge($this->urlQueries, [$this->pageName => $page]);        
 
         return '?' . http_build_query($parameters, '', '&');
-    }
-
-    /**
-     * Render links for pagination.
-     * 
-     * @return string
-     */
-    public function getIterator()
-    {
-        return new ArrayIterator($this->data);
     }
 }

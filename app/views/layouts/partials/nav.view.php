@@ -19,6 +19,9 @@
             <ul class="nav navbar-nav">
                 &nbsp;
                 <li><a href="/tasks">Tasks</a></li>
+                <a href="/tasks/create" type="button" class="btn btn-info navbar-btn">
+                    Create a new task
+                </a>
             </ul>
 
             <!-- Right Side Of Navbar -->

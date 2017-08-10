@@ -56,6 +56,16 @@ class TaskController
     }
 
     /**
+     * Show create form for the task.
+     * 
+     * @return Response
+     */
+    public function create()
+    {
+        return Response::view("tasks/create");
+    }
+
+    /**
      * Store task in database.
      * 
      * @return Response
@@ -68,11 +78,11 @@ class TaskController
             'content' => ['required'],
             'username' => ['required'],
             'email' => ['required', 'email', ['unique' => 'tasks']],
-            // 'image' => [['mimes' => 'jpg,jpeg,png,bmp'], ['max' => '2048']]
+            'image' => ['required', ['mimes' => 'jpeg,jpg,gif,png'], ['max' => '2048']]
         ]);
 
         if ($validator->failed()) {
-            return Response::redirect("/tasks")->withErrors($validator->getErrors());
+            return Response::redirect("/tasks/create")->withErrors($validator->getErrors());
         }
 
         $this->builder->table('tasks')->insert($attributes);
@@ -85,16 +95,16 @@ class TaskController
      * 
      * @return Response
      */
-    public function edit($id)
-    {
-        if (! Auth::check()) {
-            throw new NotAuthorisedException;
-        }
+    // public function edit($id)
+    // {
+    //     if (! Auth::check()) {
+    //         throw new NotAuthorisedException;
+    //     }
 
-        $task = $this->builder->table('tasks')->where('id', '=', $id)->get()[0];
+    //     $task = $this->builder->table('tasks')->where('id', '=', $id)->get()[0];
 
-        return Response::view("tasks/edit", compact('task'));
-    }
+    //     return Response::view("tasks/edit", compact('task'));
+    // }
 
     /**
      * Update content of the task in the database.
@@ -114,11 +124,11 @@ class TaskController
         ]);
 
         if ($validator->failed()) {
-            return Response::redirect("/tasks/$id/edit")->withErrors($validator->getErrors());
+            return Response::redirect("/tasks")->withErrors($validator->getErrors());
         }
 
         $this->builder->table('tasks')->where('id', '=', $id)->update($attributes);
 
-        return Response::redirect("/tasks/$id/edit");
+        return Response::redirect("/tasks");
     }
 }

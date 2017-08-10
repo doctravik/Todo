@@ -12,7 +12,9 @@
             </li>
 
             <?php foreach ($paginator->pages() as $page => $url) : ?>
-                <li><a href="<?= htmlspecialchars($url); ?>"><?= htmlspecialchars($page) ?></a></li>
+                <li class="<?= $page == $paginator->currentPage() ? 'active' : ''; ?>">
+                    <a href="<?= htmlspecialchars($url); ?>"><?= htmlspecialchars($page) ?></a>
+                </li>
             <?php endforeach; ?>
 
             <li>
