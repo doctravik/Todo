@@ -8,8 +8,10 @@ use App\Models\Task;
 use Core\Http\Response;
 use Core\Database\Builder;
 use App\Filters\TaskFilter;
+use App\Models\Image\Image;
 use Core\File\UploadedFile;
 use Core\Validator\Validator;
+use App\Models\Image\ImageHandler;
 use Core\Exceptions\NotAuthorisedException;
 
 class TaskController
@@ -86,7 +88,17 @@ class TaskController
             return Response::redirect("/tasks/create")->withErrors($validator->getErrors());
         }
 
-        $this->builder->table('tasks')->insert($attributes);
+        $image = Image::createFromPath($this->request->input('image')->getPath());
+        $path = (new ImageHandler($image))->resize()->save();
+
+        if (! $path) {
+            return Response::redirect("/tasks")
+                ->withErrors(['image', 'Could not recieve path of the image']);
+        }
+
+        $this->builder->table('tasks')->insert(
+            array_merge($attributes, ['image' => $path])
+        );
 
         return Response::redirect("/tasks");
     }
@@ -96,16 +108,16 @@ class TaskController
      * 
      * @return Response
      */
-    // public function edit($id)
-    // {
-    //     if (! Auth::check()) {
-    //         throw new NotAuthorisedException;
-    //     }
+    public function edit($id)
+    {
+        if (! Auth::check()) {
+            throw new NotAuthorisedException;
+        }
 
-    //     $task = $this->builder->table('tasks')->where('id', '=', $id)->get()[0];
+        $task = $this->builder->table('tasks')->where('id', '=', $id)->get()[0];
 
-    //     return Response::view("tasks/edit", compact('task'));
-    // }
+        return Response::view("tasks/edit", compact('task'));
+    }
 
     /**
      * Update content of the task in the database.

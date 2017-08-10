@@ -143,7 +143,7 @@ class Image
      */
     protected function getFilename()
     {
-        return pathinfo($this->name, PATHINFO_FILENAME);
+        return pathinfo($this->path, PATHINFO_FILENAME);
     }
 
     /**
@@ -153,7 +153,7 @@ class Image
      */
     protected function getExtension()
     {
-        return pathinfo($this->name, PATHINFO_EXTENSION) 
+        return pathinfo($this->path, PATHINFO_EXTENSION) 
                     ?: $this->getExtensionFromType()[$this->type];
     }
 

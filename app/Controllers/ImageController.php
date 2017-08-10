@@ -39,7 +39,7 @@ class ImageController
      */
     public function store($id)
     {
-        $uploadedImage = new UploadedFile($_FILES['image']);
+        $uploadedImage = $this->request->input('image');
         
         $validator = Validator::validate(['image' => $uploadedImage], [
             'image' => ['required', ['mimes' => 'jpeg,jpg,gif,png'], ['max' => '2048']]
