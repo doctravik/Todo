@@ -9,14 +9,18 @@
                 <h3 class="panel-title">Task list</h3>
             </div>
             <div class="panel-body">
-                <table class="table">
-                    <?php includePartial("tasks/partials/headers.view.php") ; ?>          
-                    <tbody>
-                        <?php foreach($tasks as $task) : ?>
-                            <?php includePartial("tasks/partials/task.view.php", compact('task')) ; ?>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                <?php if (count($tasks->getData())) : ?>
+                    <table class="table">
+                        <?php includePartial("tasks/partials/headers.view.php") ; ?>          
+                        <tbody>
+                            <?php foreach($tasks as $task) : ?>
+                                <?php includePartial("tasks/partials/task.view.php", compact('task')) ; ?>
+                            <?php endforeach ; ?>
+                        </tbody>
+                    </table>
+                <?php else : ?>
+                    <div><b>No tasks available</b></div>
+                <?php endif ; ?>
             </div>
         </div>
         

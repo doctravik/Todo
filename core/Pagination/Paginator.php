@@ -104,6 +104,16 @@ class Paginator implements IteratorAggregate
     }
 
     /**
+     * Get paginated data.
+     * 
+     * @return array
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
      * Getter for current page.
      *
      * @return int
