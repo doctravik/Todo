@@ -3,35 +3,13 @@
 namespace App\Controllers;
 
 use App\Models\Task;
-use Core\Http\Request;
 use Core\Http\Response;
-use Core\Database\Builder;
 use App\Models\Image\Image;
-use Core\File\UploadedFile;
 use Core\Validator\Validator;
 use App\Models\Image\ImageHandler;
 
 class ImageController
 {
-    /**
-     * @var Request
-     */
-    private $request;
-
-    /**
-     * @var Builder
-     */
-    private $builder;
-
-    /**
-     * Create instance of TaskController.
-     */
-    public function __construct()
-    {
-        $this->request = new Request;
-        $this->builder = new Builder;
-    }
-
     /**
      * Attach image to the task.
      * 

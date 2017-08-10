@@ -2,33 +2,12 @@
 
 namespace App\Controllers;
 
-use Core\Container;
 use App\Models\Auth;
 use Core\Http\Response;
-use Core\Database\Builder;
 use Core\Exceptions\NotAuthorisedException;
 
 class StatusController
 {
-    /**
-     * @var Core\Http\Request
-     */
-    private $request;
-
-    /**
-     * @var Builder
-     */
-    private $builder;
-
-    /**
-     * Create instance of TaskController.
-     */
-    public function __construct()
-    {
-        $this->request = Container::instance()->request;
-        $this->builder = new Builder;
-    }
-
     /**
      * Update status of the task in the database.
      * 

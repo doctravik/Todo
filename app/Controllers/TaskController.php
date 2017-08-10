@@ -2,39 +2,18 @@
 
 namespace App\Controllers;
 
-use Core\Container;
 use App\Models\Auth;
 use App\Models\Task;
 use Core\Http\Response;
-use Core\Database\Builder;
 use App\Filters\TaskFilter;
 use App\Models\Image\Image;
-use Core\File\UploadedFile;
 use Core\Validator\Validator;
+use App\Controllers\Controller;
 use App\Models\Image\ImageHandler;
 use Core\Exceptions\NotAuthorisedException;
 
-class TaskController
+class TaskController extends Controller
 {
-    /**
-     * @var Core\Http\Request
-     */
-    private $request;
-
-    /**
-     * @var Builder
-     */
-    private $builder;
-
-    /**
-     * Create instance of TaskController.
-     */
-    public function __construct()
-    {
-        $this->request = Container::instance()->request;
-        $this->builder = new Builder;
-    }
-
     /**
      * Show task's list.
      * 
