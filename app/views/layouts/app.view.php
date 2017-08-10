@@ -21,6 +21,7 @@
         </div>
         
         <?php require('partials/footer.view.php'); ?>
+        <script src="/app/public/js/app.js"></script>
     </div>
 </body>
 </html>

@@ -73,17 +73,5 @@
         modal.find('.modal-body #username').text($('#form-username').val());
         modal.find('.modal-body #email').text($('#form-email').val());
         previewImage(document.getElementById('form-file'));
-
-        function previewImage(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#preview-image').attr('src', e.target.result);
-                }
-
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
     });
 </script>
