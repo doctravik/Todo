@@ -48,7 +48,7 @@ class LoginController extends Controller
             ]);
         }
 
-        if ($user->is_admin && $this->verifyCredentials($user, $attributes) == false) {
+        if ($user->is_admin == 0 || $this->verifyCredentials($user, $attributes) == false) {
             return Response::redirect("/admin")->withErrors([
                 'username' => ['Your credentials were not verified.']
             ]);
