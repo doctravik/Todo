@@ -29,8 +29,8 @@ class RegisterController extends Controller
         $attributes = $this->request->only(['username', 'email', 'password']);
         
         $validator = Validator::validate($attributes, [
-            'username' => ['required'],
-            'email' => ['required', 'email'],
+            'username' => ['required', ['unique' => 'users']],
+            'email' => ['required', 'email', ['unique' => 'users']],
             'password' => ['required']
         ]);
 
