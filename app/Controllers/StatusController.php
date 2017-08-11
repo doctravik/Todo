@@ -24,6 +24,8 @@ class StatusController extends Controller
             'is_completed' => (bool) $this->request->input('is_completed') ?: 0
         ]);
 
-        return Response::redirect("/tasks");
+        return Response::redirect("/tasks")->withSuccess([
+            'message' => 'Status of the task was successfully updated'
+        ]);;
     }
 }

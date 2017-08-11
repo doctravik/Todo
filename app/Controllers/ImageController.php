@@ -40,6 +40,8 @@ class ImageController extends Controller
             'image' => $path
         ]);
 
-        return Response::redirect("/tasks");
+        return Response::redirect("/tasks")->withSuccess([
+            'message' => 'Image was successfully atached to the task'
+        ]);
     }
 }

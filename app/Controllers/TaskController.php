@@ -77,7 +77,9 @@ class TaskController extends Controller
             'image' => $path ?? null
         ]));
 
-        return Response::redirect("/tasks");
+        return Response::redirect("/tasks")->withSuccess([
+            'message' => 'Task was successfully created'
+        ]);
     }
 
     /**
@@ -119,6 +121,8 @@ class TaskController extends Controller
 
         $this->builder->table('tasks')->where('id', '=', $id)->update($attributes);
 
-        return Response::redirect("/tasks");
+        return Response::redirect("/tasks")->withSuccess([
+            'message' => 'Content of the task was successfully updated'
+        ]);
     }
 }

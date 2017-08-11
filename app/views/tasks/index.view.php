@@ -1,6 +1,11 @@
 <?php $layout = 'app/views/layouts/app.view.php' ?>
 
-<?php includePartial("tasks/partials/errors.view.php") ; ?>
+<div class="row">
+    <div class="col-md-12">
+        <?php includePartial("tasks/partials/errors.view.php") ; ?>
+        <?php includePartial('layouts/partials/success.view.php') ; ?>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-md-12">
