@@ -5,6 +5,7 @@ use Core\Container;
 use Core\Collection\Collection;
 use Core\Session\ErrorsSessionStorage;
 use Core\Session\RequestSessionStorage;
+use Core\Session\SuccessSessionStorage;
 
 /**
  * Helper for output validation errors.
@@ -33,6 +34,16 @@ function old($key, $default = '')
     $storage = new RequestSessionStorage;
 
     return $storage->has($key) ? $storage->get($key) : $default;
+}
+
+/**
+ * Helper for success message output.
+ * 
+ * @return mixed
+ */
+function success()
+{
+    return new SuccessSessionStorage;
 }
 
 /**

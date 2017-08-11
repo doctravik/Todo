@@ -44,6 +44,8 @@ class RegisterController extends Controller
             ]);
         }
         
-        return Response::redirect("/tasks");
+        return Response::redirect("/register")->withSuccess([
+            'message' => "User {$attributes['username']} was successfully created"
+        ]);
     }
 }

@@ -5,6 +5,7 @@ namespace Core\Http;
 use Core\View\Template;
 use Core\Session\ErrorsSessionStorage;
 use Core\Session\RequestSessionStorage;
+use Core\Session\SuccessSessionStorage;
 
 class Response
 {
@@ -99,6 +100,19 @@ class Response
     public function withErrors(array $errors)
     {
         (new ErrorsSessionStorage())->set($errors);
+
+        return $this;
+    }
+
+    /**
+     * Save success message for the web response.
+     * 
+     * @param  array $message
+     * @return $this
+     */
+    public function withSuccess(array $message)
+    {
+        (new SuccessSessionStorage())->set($message);
 
         return $this;
     }

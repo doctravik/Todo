@@ -336,8 +336,7 @@ class Builder
         $query = $this->query . $criterias;
 
         $bindings = array_merge($this->bindings, $criteriaBindings);
-var_dump($query);
-var_dump($bindings);
+        
         try {
             $statement = $this->db->prepare($query);
             $statement->execute($bindings);
