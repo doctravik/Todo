@@ -53,7 +53,7 @@ class Paginator implements IteratorAggregate
     /**
      * @var array
      */
-    protected $urlQueries;
+    protected $urlQueries = [];
 
     /**
      * Create an instance of Paginator
@@ -68,8 +68,6 @@ class Paginator implements IteratorAggregate
         $this->total = $total;
         $this->lastPage = (int) ceil($total / $perPage);
         $this->currentPage = $this->normalizeCurrentPage($currentPage);
-
-        $this->urlQueries = (new Request)->all();
     }
 
     /**
@@ -215,6 +213,19 @@ class Paginator implements IteratorAggregate
     public function getIterator()
     {
         return new ArrayIterator($this->data);
+    }
+
+    /**
+     * Append url queries to the url.
+     *
+     * @param array $queries
+     * @return $this
+     */
+    public function append(...$queries)
+    {
+        $this->urlQueries = (new Request)->only($queries);
+
+        return $this;
     }
 
     /**

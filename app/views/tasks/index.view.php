@@ -29,7 +29,9 @@
             </div>
         </div>
         
-        <?php includePartial("pagination/template.view.php", ['paginator' => $tasks]) ; ?>
+        <?php includePartial("pagination/template.view.php", [
+            'paginator' => $tasks->append('sort', 'order')
+        ]) ; ?>
     </div>
 </div>
 
