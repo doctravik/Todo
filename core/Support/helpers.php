@@ -11,7 +11,7 @@ use Core\Session\SuccessSessionStorage;
  * Helper for output validation errors.
  * 
  * @param  string $errorName
- * @return string
+ * @return ErrorsSessionStorage||Collection
  */
 function errors($errorName = null)
 {
@@ -39,7 +39,7 @@ function old($key, $default = '')
 /**
  * Helper for success message output.
  * 
- * @return mixed
+ * @return SuccessSessionStorage
  */
 function success()
 {
@@ -59,8 +59,9 @@ function dd($value)
 }
 
 /**
- * Include partial to the view.
+ * Include partial template to the view.
  *
+ * @param  string $path
  * @param  array $data
  * @return void
  */

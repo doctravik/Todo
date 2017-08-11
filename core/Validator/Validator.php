@@ -142,7 +142,7 @@ class Validator
      * Check if attribute value comply with the rule.
      * 
      * @param  string $attribute
-     * @param  mixed  $rule
+     * @param  string $rule
      * @param  mixed  $parameters
      * @return void    
      */
@@ -176,8 +176,9 @@ class Validator
      * Add error messages to the validator's error list.
      * 
      * @param string $attribute
-     * @param  mixed  $parameters
      * @param string $rule
+     * @param mixed $parameters
+     * @return void
      */
     protected function setErrorMessage($attribute, $rule, $parameters)
     {

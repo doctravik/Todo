@@ -94,7 +94,7 @@ class SessionStorage
     }
 
     /**
-     * Check if session has errors and it is not empty.
+     * Check if session has given offset and it is not empty.
      * 
      * @return boolean
      */

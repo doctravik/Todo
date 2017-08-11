@@ -18,7 +18,7 @@ class Builder
     protected $db;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $table = null;
 
@@ -87,7 +87,7 @@ class Builder
     /**
      * Set value for columns property.
      * 
-     * @param  string $table
+     * @param  array of columns
      * @return $this
      */
     public function select(...$columns)
@@ -248,7 +248,7 @@ class Builder
      * Execute count query.
      *
      * @param  string $column
-     * @return array
+     * @return int
      */
     public function count($column = '*')
     {
@@ -263,7 +263,7 @@ class Builder
      * Execute select query with pagination.
      *
      * @param  integer $perPage
-     * @return array
+     * @return Paginator
      */
     public function paginate($perPage = 10)
     {
@@ -281,7 +281,7 @@ class Builder
     /**
      * Get current page from uri.
      * 
-     * @return int|null
+     * @return int
      */
     protected function getCurrentPage()
     {
@@ -343,7 +343,7 @@ class Builder
 
             return $statement;
         } catch (\Exception $e) {
-            die($e->getMessage());
+            die('Database error');
         }
     }
 

@@ -14,6 +14,11 @@ class Router
      */
     protected $routes;
 
+    /**
+     * Create an instance of Router.
+     * 
+     * @param string $file path
+     */
     public function __construct($file)
     {
         $this->routes['GET'] = [];
@@ -120,7 +125,7 @@ class Router
     /**
      * Check if the regexp version of the route matches uri of the web request.
      * 
-     * @param  string $route
+     * @param  string $regexp
      * @param  string $uri
      * @return boolean
      */

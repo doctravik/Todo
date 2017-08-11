@@ -11,7 +11,8 @@ class StatusController extends Controller
 {
     /**
      * Update status of the task in the database.
-     * 
+     *
+     * @param  int $id
      * @return Response
      */
     public function update($id)

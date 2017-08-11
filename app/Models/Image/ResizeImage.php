@@ -7,6 +7,21 @@ use App\Models\Image\Image;
 class ResizeImage
 {
     /**
+     * @var Image
+     */
+    protected $image;
+
+    /**
+     * @var int
+     */
+    protected $maxWidth;
+
+    /**
+     * @var int
+     */
+    protected $maxHeight;
+
+    /**
      * Create new instance of ResizeImage.
      * 
      * @param Image $image

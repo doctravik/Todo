@@ -74,8 +74,9 @@ class Paginator implements IteratorAggregate
 
     /**
      * Ensure that current page has a valid value.
-     * 
-     * @return void
+     *
+     * @param  int $currentPage
+     * @return int
      */
     protected function normalizeCurrentPage($currentPage)
     {
@@ -207,9 +208,9 @@ class Paginator implements IteratorAggregate
     }
 
     /**
-     * Render links for pagination.
+     * Get access to data property from object.
      * 
-     * @return string
+     * @return ArrayIterator
      */
     public function getIterator()
     {

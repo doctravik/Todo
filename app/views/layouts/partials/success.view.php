@@ -4,5 +4,5 @@
     </div>
 <?php endif; ?>
 
-<?php success()->clear() ?>
-<?php (new Core\Session\RequestSessionStorage())->clear() ?>
+<?php success()->clear() ; ?>
+<?php (new Core\Session\RequestSessionStorage())->clear() ; ?>

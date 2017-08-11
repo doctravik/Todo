@@ -50,7 +50,8 @@ class Image
     }
 
     /**
-     * Create Image instance from the given path
+     * Create Image instance from the given path.
+     * 
      * @param  string $path
      * @return Image
      */
@@ -99,6 +100,7 @@ class Image
      * Set image resource.
      * 
      * @param mixed $resource
+     * @return void
      */
     public function setResource($resource)
     {

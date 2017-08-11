@@ -27,7 +27,7 @@ class App
     /**
      * Run application.
      * 
-     * @return void
+     * @return mixed
      */
     public function run()
     {

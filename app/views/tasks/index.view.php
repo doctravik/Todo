@@ -1,4 +1,4 @@
-<?php $layout = 'app/views/layouts/app.view.php' ?>
+<?php $layout = 'app/views/layouts/app.view.php'; ?>
 
 <div class="row">
     <div class="col-md-12">
@@ -56,5 +56,16 @@
         modal.find('#attachButton').on('click', function () {
             modal.find('.modal-body form').submit();
         });
+
+        $("#file").change(function(){
+            previewImage(this);
+            $('#preview-image').show();
+        });
+    });
+
+    $('#attachImageModal').on('hide.bs.modal', function (event) {
+        $("#attach-form")[0].reset();
+        $('#preview-image').attr('src', '');
+        $('#preview-image').hide();
     });
 </script>

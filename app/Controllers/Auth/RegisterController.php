@@ -45,7 +45,7 @@ class RegisterController extends Controller
         }
         
         return Response::redirect("/register")->withSuccess([
-            'message' => "User {$attributes['username']} was successfully created"
+            'message' => "User was successfully created"
         ]);
     }
 }

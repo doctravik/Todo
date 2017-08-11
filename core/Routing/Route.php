@@ -10,14 +10,14 @@ class Route
      * @param string $route
      * @param string $uri 
      * @param string $action
-     * @param string $regexp
+     * @param string|null $regexp
      */
     public function __construct($route, $uri, $action, $regexp = null)
     {
         $this->route = $route;
         $this->uri = $uri;
-        $this->regexp = $regexp;
         $this->action = $action;
+        $this->regexp = $regexp;
         $this->parameters = [];
 
         if ($regexp) {
@@ -65,7 +65,7 @@ class Route
      */
     protected function defineParameterNames()
     {
-        preg_match_all('/{(.+?)}/', $this->route, $matches);
+        preg_match_all('/{(\w+?)}/', $this->route, $matches);
 
         return $matches[1];
     }

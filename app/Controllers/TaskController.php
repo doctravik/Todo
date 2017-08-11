@@ -84,7 +84,8 @@ class TaskController extends Controller
 
     /**
      * Show edit form for the task.
-     * 
+     *
+     * @param  int $id
      * @return Response
      */
     public function edit($id)
@@ -100,7 +101,8 @@ class TaskController extends Controller
 
     /**
      * Update content of the task in the database.
-     * 
+     *
+     * @param  int $id
      * @return Response
      */
     public function update($id)

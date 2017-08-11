@@ -55,7 +55,7 @@ class Response
     /**
      * Redirect to the url.
      * 
-     * @param  string $path
+     * @param  string $url
      * @return static
      */
     public static function redirect($url)
@@ -120,8 +120,6 @@ class Response
     /**
      * Save old input for the web response.
      * 
-     * @param  string $name
-     * @param  string $value
      * @return $this
      */
     public function withOldInput()

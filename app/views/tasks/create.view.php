@@ -79,6 +79,7 @@
         var email = user[0] && user[0].email;
         $('#form-email').val(email); 
     }
+    
     $('#previewCreateModal').on('show.bs.modal', function (event) {
         var modal = $(this);
         modal.find('.modal-body #content').text($('#form-content').val());

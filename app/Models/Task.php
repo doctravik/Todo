@@ -32,10 +32,10 @@ class Task
      * Save task in the database.
      *
      * @param array $attributes
-     * @return void
+     * @return boolean
      */
     public static function create(array $attributes)
     {
-        (new Builder)->table('tasks')->insert($attributes);
+        return (new Builder)->table('tasks')->insert($attributes);
     }
 }

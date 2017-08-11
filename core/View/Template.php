@@ -34,7 +34,7 @@ class Template
     /**
      * Render template.
      * 
-     * @return void
+     * @return string
      */
     public function render() {
         return $this->compileView();

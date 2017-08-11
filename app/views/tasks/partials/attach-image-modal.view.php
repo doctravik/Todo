@@ -8,13 +8,19 @@
                 <h4 class="modal-title">Attach image to the task</h4>
             </div>
             <div class="modal-body">
-                <form method="POST" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="file">File input</label>
-                        <!-- <input type="hidden" name="MAX_FILE_SIZE" value="10000"> -->
-                        <input type="file" id="file" name="image">
+                <div class="row">
+                    <div class="col-md-6">
+                        <form method="POST" enctype="multipart/form-data" id="attach-form">
+                            <div class="form-group">
+                                <label for="file">File input</label>
+                                <input type="file" id="file" name="image">
+                            </div>
+                        </form>  
                     </div>
-                </form>
+                    <div class="col-md-6">
+                        <image src="" alt="preview" id="preview-image" class="img-128 is-hidden">
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

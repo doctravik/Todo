@@ -13,7 +13,8 @@ class ImageController extends Controller
 {
     /**
      * Attach image to the task.
-     * 
+     *
+     * @param  int $id
      * @return Response
      */
     public function store($id)

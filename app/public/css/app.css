@@ -25,3 +25,11 @@
 .footer p {
     margin: 0;
 }
+
+.img-64 {
+    height: 64px;
+}
+
+.img-128 {
+    height: 128px;
+}
