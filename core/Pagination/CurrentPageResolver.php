@@ -8,7 +8,7 @@ class CurrentPageResolver
 {
     /**
      * Resolve current page.
-     * 
+     *
      * @return int
      */
     public static function resolve()
@@ -28,7 +28,7 @@ class CurrentPageResolver
 
     /**
      * Validate page value.
-     * 
+     *
      * @param  int $page
      * @return boolean
      */

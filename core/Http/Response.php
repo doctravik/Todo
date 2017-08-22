@@ -28,8 +28,6 @@ class Response
      * Return a new web response.
      *
      * @param  string  $content
-     * @param  int  $status
-     * @param  array  $headers
      * @return void
      */
     public function __construct($content = '')
@@ -39,7 +37,7 @@ class Response
 
     /**
      * Render view.
-     * 
+     *
      * @param  string $path
      * @param  array  $data
      * @return static
@@ -54,7 +52,7 @@ class Response
 
     /**
      * Redirect to the url.
-     * 
+     *
      * @param  string $url
      * @return static
      */
@@ -68,7 +66,7 @@ class Response
 
     /**
      * Set status code for the Response.
-     * 
+     *
      * @param  integer $status
      * @return $this
      */
@@ -80,7 +78,7 @@ class Response
 
     /**
      * Set header for the web response.
-     * 
+     *
      * @param  string $name
      * @param  string $value
      * @return $this
@@ -93,7 +91,7 @@ class Response
 
     /**
      * Save validation errors for the web response.
-     * 
+     *
      * @param  array $errors
      * @return $this
      */
@@ -106,7 +104,7 @@ class Response
 
     /**
      * Save success message for the web response.
-     * 
+     *
      * @param  array $message
      * @return $this
      */
@@ -119,7 +117,7 @@ class Response
 
     /**
      * Save old input for the web response.
-     * 
+     *
      * @return $this
      */
     public function withOldInput()

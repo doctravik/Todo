@@ -6,43 +6,43 @@ class UploadedFile
 {
     /**
      * The temporary filename of the file in which the uploaded file was stored on the server.
-     * 
+     *
      * @var string
      */
     protected $path;
 
     /**
      * The original name of the file on the client machine
-     * 
+     *
      * @var string
      */
     protected $clientName;
 
     /**
-     * The mime type of the file, if the browser provided this information. An example would be "image/gif". 
+     * The mime type of the file, if the browser provided this information. An example would be "image/gif".
      * This mime type is however not checked on the PHP side and therefore don't take its value for granted
-     * 
+     *
      * @var string
      */
     protected $mimeType;
 
     /**
      * The error code associated with this file upload.
-     * 
+     *
      * @var int
      */
     protected $error;
 
     /**
      * The size, in bytes, of the uploaded file.
-     * 
+     *
      * @var int
      */
     protected $size;
 
     /**
      * Create new instance of UploadedFile.
-     * 
+     *
      * @param array $uploadedFile
      */
     public function __construct(array $uploadedFile)
@@ -56,7 +56,7 @@ class UploadedFile
 
     /**
      * Get path to the UploadedFile.
-     * 
+     *
      * @return string
      */
     public function getPath()
@@ -66,7 +66,7 @@ class UploadedFile
 
     /**
      * Get client original name of UploadedFile.
-     * 
+     *
      * @return string
      */
     public function getClientName()
@@ -76,7 +76,7 @@ class UploadedFile
 
     /**
      * Get client mime type of UploadedFile.
-     * 
+     *
      * @return string
      */
     public function getMimeType()
@@ -86,7 +86,7 @@ class UploadedFile
 
     /**
      * Get error code associated with this file uploading.
-     * 
+     *
      * @return int
      */
     public function getErrorCode()
@@ -96,7 +96,7 @@ class UploadedFile
 
     /**
      * Get size in byte of the UploadedFile.
-     * 
+     *
      * @return int
      */
     public function getSize()
@@ -106,7 +106,7 @@ class UploadedFile
 
     /**
      * Move uploaded file to the new destination
-     * 
+     *
      * @return boolean
      */
     public function move($destination)
@@ -120,7 +120,7 @@ class UploadedFile
 
     /**
      * Whether the file was uploaded without errors.
-     * 
+     *
      * @return boolean
      */
     public function isValid()

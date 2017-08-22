@@ -2,9 +2,6 @@
 
 namespace Core\Routing;
 
-use Core\Container;
-use Core\Routing\Route;
-use Core\Routing\RouteCompiler;
 use Core\Exceptions\RouteNotFoundException;
 
 class Router
@@ -16,7 +13,7 @@ class Router
 
     /**
      * Create an instance of Router.
-     * 
+     *
      * @param string $file path
      */
     public function __construct($file)
@@ -29,7 +26,7 @@ class Router
 
     /**
      * Load map of routes.
-     * 
+     *
      * @param  string $filepath
      * @return void
      */
@@ -46,7 +43,8 @@ class Router
      * @param string $uri
      * @param string $action
      */
-    public function get($uri, $action) {
+    public function get($uri, $action)
+    {
         $this->routes['GET'][$uri] = $action;
     }
 
@@ -56,17 +54,18 @@ class Router
      * @param string $uri
      * @param string $action
      */
-    public function post($uri, $action) {
+    public function post($uri, $action)
+    {
         $this->routes['POST'][$uri] = $action;
     }
 
-   /**
-     * Route to uri.
-     *
-     * @param string $uri
-     * @param string $method
-     * @return Core\Http\Response
-     */
+    /**
+      * Route to uri.
+      *
+      * @param string $uri
+      * @param string $method
+      * @return Core\Http\Response
+      */
     public function direct($uri, $method)
     {
         $routes = $this->routes[$method];
@@ -80,12 +79,12 @@ class Router
 
     /**
      * Find route for the given uri of the web request.
-     * 
+     *
      * @param  string $uri
      * @param  array $routes
      * @return Route|null
      */
-    protected function findRoute($uri, array $routes) 
+    protected function findRoute($uri, array $routes)
     {
         if ($this->matchAgainstRoutes($uri, $routes)) {
             return new Route($uri, $uri, $routes[$uri]);
@@ -96,23 +95,25 @@ class Router
 
     /**
      * Check if there are route that exactly matches uri of the web request.
-     * 
+     *
      * @param  string $uri
      * @param  array $routes
      * @return boolean
      */
-    protected function matchAgainstRoutes($uri, array $routes) {
+    protected function matchAgainstRoutes($uri, array $routes)
+    {
         return array_key_exists($uri, $routes);
     }
 
     /**
      * Check if the routes with wildcards matches uri of the web request.
-     * 
+     *
      * @param  string $uri
      * @param  array $routes
      * @return Route|null
      */
-    protected function checkRoutesConsiderWildcard($uri, array $routes) {
+    protected function checkRoutesConsiderWildcard($uri, array $routes)
+    {
         foreach ($routes as $route => $action) {
             if ($this->matches($regexp = RouteCompiler::getRegexp($route), $uri)) {
                 return new Route($route, $uri, $action, $regexp);
@@ -124,19 +125,19 @@ class Router
 
     /**
      * Check if the regexp version of the route matches uri of the web request.
-     * 
+     *
      * @param  string $regexp
      * @param  string $uri
      * @return boolean
      */
-    protected function matches($regexp, $uri) 
+    protected function matches($regexp, $uri)
     {
         return preg_match($regexp, $uri);
     }
 
     /**
      * Retrieve web response after processing action.
-     * 
+     *
      * @return Core\Http\Response
      */
     protected function getResponse()
@@ -146,10 +147,10 @@ class Router
 
     /**
      * Call action of the controller.
-     * 
+     *
      * @param  string $controller
      * @param  string $action
-     * @return Core\Http\Response 
+     * @return Core\Http\Response
      */
     protected function callAction($controller, $action)
     {

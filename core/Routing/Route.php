@@ -6,9 +6,9 @@ class Route
 {
     /**
      * Create new instance of the Route.
-     * 
+     *
      * @param string $route
-     * @param string $uri 
+     * @param string $uri
      * @param string $action
      * @param string|null $regexp
      */
@@ -27,7 +27,7 @@ class Route
 
     /**
      * Get action property.
-     * 
+     *
      * @return string
      */
     public function getAction()
@@ -37,7 +37,7 @@ class Route
 
     /**
      * Get parameters property.
-     * 
+     *
      * @return array
      */
     public function getParameters()
@@ -47,7 +47,7 @@ class Route
 
     /**
      * Bind route parameters to uri values.
-     * 
+     *
      * @return void
      */
     public function bindRouteParameters()
@@ -78,7 +78,7 @@ class Route
         preg_match_all($this->regexp, $this->uri, $matches);
 
         if ($parametersValues = array_slice($matches, 1)) {
-            return call_user_func_array('array_merge', array_slice($matches, 1));
+            return call_user_func_array('array_merge', $parametersValues);
         }
 
         return [];

@@ -2,8 +2,6 @@
 
 namespace App\Models\Image;
 
-use App\Models\Image\Image;
-
 class ImageHandler
 {
     /**
@@ -13,17 +11,17 @@ class ImageHandler
 
     /**
      * Create an instance of the $image.
-     * 
+     *
      * @param Image $image
      */
     public function __construct(Image $image)
     {
-        $this->image = $image;    
+        $this->image = $image;
     }
 
     /**
      * Resize image.
-     * 
+     *
      * @param  integer $maxWidth
      * @param  integer $maxHeight
      * @return $this

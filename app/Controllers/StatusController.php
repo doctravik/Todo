@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use Core\Auth\Auth;
 use Core\Http\Response;
-use App\Controllers\Controller;
 use Core\Exceptions\NotAuthorisedException;
 
 class StatusController extends Controller
@@ -27,6 +26,6 @@ class StatusController extends Controller
 
         return Response::redirect("/tasks")->withSuccess([
             'message' => 'Status of the task was successfully updated'
-        ]);;
+        ]);
     }
 }

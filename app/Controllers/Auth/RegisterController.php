@@ -11,7 +11,7 @@ class RegisterController extends Controller
 {
     /**
      * Show register user form.
-     * 
+     *
      * @return Response
      */
     public function showRegisterForm()
@@ -21,13 +21,13 @@ class RegisterController extends Controller
 
     /**
      * Save user in the db.
-     * 
+     *
      * @return Response
      */
     public function register()
     {
         $attributes = $this->request->only(['username', 'email', 'password']);
-        
+
         $validator = Validator::validate($attributes, [
             'username' => ['required', ['unique' => 'users']],
             'email' => ['required', 'email', ['unique' => 'users']],
@@ -43,7 +43,7 @@ class RegisterController extends Controller
                 'username' => ['Could not save user.']
             ]);
         }
-        
+
         return Response::redirect("/register")->withSuccess([
             'message' => "User was successfully created"
         ]);

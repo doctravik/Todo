@@ -31,7 +31,7 @@ class Validator
 
     /**
      * Create instance of Validator.
-     * 
+     *
      * @param array $data
      * @param array $rules
      */
@@ -43,7 +43,7 @@ class Validator
 
     /**
      * Check if the validation was failed.
-     * 
+     *
      * @return boolean
      */
     public function failed()
@@ -53,7 +53,7 @@ class Validator
 
     /**
      * Getter for validation errors.
-     * 
+     *
      * @return array
      */
     public function getErrors()
@@ -63,7 +63,7 @@ class Validator
 
     /**
      * Launch validator.
-     * 
+     *
      * @param  array $data
      * @param  array $rules
      * @return Validator
@@ -79,7 +79,7 @@ class Validator
 
     /**
      * Iterate all rules and parse it.
-     * 
+     *
      * @return void
      */
     protected function parseRules()
@@ -88,7 +88,7 @@ class Validator
             foreach ($rules as $rule) {
                 [$rule, $parameters] = $this->parseRule($rule);
 
-                if ($this->shouldStopValidateAtrribute($attribute, $rule, $parameters)) {         
+                if ($this->shouldStopValidateAtrribute($attribute, $rule, $parameters)) {
                     continue 2;
                 }
 
@@ -99,7 +99,7 @@ class Validator
 
     /**
      * Check if attribute has no need further validation.
-     * 
+     *
      * @param  string $attribute
      * @param  mixed  $rule
      * @param  mixed  $parameters
@@ -110,12 +110,12 @@ class Validator
         $value = $this->getAttributeValue($attribute);
 
         if ($rule === 'maybeRequired' && $value === null) {
-                return true;
+            return true;
         }
 
-        if ($rule === 'maybeRequired' && $value instanceof UploadedFile 
+        if ($rule === 'maybeRequired' && $value instanceof UploadedFile
             && empty($value->getPath())) {
-                return true;
+            return true;
         }
 
         return false;
@@ -123,7 +123,7 @@ class Validator
 
     /**
      * Parse rule if it is array.
-     * 
+     *
      * @param  mixes $rule
      * @param  mixed $parameters
      * @return array
@@ -140,11 +140,11 @@ class Validator
 
     /**
      * Check if attribute value comply with the rule.
-     * 
+     *
      * @param  string $attribute
      * @param  string $rule
      * @param  mixed  $parameters
-     * @return void    
+     * @return void
      */
     protected function validateAttribute($attribute, $rule, $parameters)
     {
@@ -163,7 +163,7 @@ class Validator
 
     /**
      * Retrieve the value of the field.
-     * 
+     *
      * @param  string $attribute
      * @return mixed
      */
@@ -174,7 +174,7 @@ class Validator
 
     /**
      * Add error messages to the validator's error list.
-     * 
+     *
      * @param string $attribute
      * @param string $rule
      * @param mixed $parameters
@@ -183,24 +183,25 @@ class Validator
     protected function setErrorMessage($attribute, $rule, $parameters)
     {
         $this->errors[$attribute][] = $this->errorMessages(
-            $attribute, $parameters
+            $attribute,
+            $parameters
         )[$rule];
     }
 
     /**
      * List of error messages.
-     * 
+     *
      * @param  string $attribute
      * @param  mixed  $parameters
      * @return array
      */
-    protected function ErrorMessages($attribute = 'Undefined field', $parameters)
+    protected function errorMessages($attribute, $parameters)
     {
         return [
             'email' => "$attribute should be a valid email address",
             'exists' => "$attribute should exists in table $parameters",
             'in' => "$attribute should be only $parameters",
-            'max' => "$attribute should be less then $parameters Kb",            
+            'max' => "$attribute should be less then $parameters Kb",
             'maybeRequired' => "",
             'mimes' => "$attribute should be only type of $parameters",
             'required' => "$attribute is required",
@@ -266,7 +267,7 @@ class Validator
     protected function validateUnique($attribute, $value, $parameters)
     {
         $builder = new Builder;
-        
+
         $count = $builder->table($parameters)
             ->where($attribute, '=', $value)
             ->count();
@@ -328,7 +329,7 @@ class Validator
         }
 
         return false;
-    }  
+    }
 
     /**
      * Validate that an attribute exists in the table.
@@ -341,7 +342,7 @@ class Validator
     protected function validateExists($attribute, $value, $parameters)
     {
         $builder = new Builder;
-        
+
         [$table, $column] = explode(':', $parameters);
 
         $count = $builder->table($table)

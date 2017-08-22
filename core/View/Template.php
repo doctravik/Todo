@@ -33,16 +33,17 @@ class Template
 
     /**
      * Render template.
-     * 
+     *
      * @return string
      */
-    public function render() {
+    public function render()
+    {
         return $this->compileView();
     }
 
     /**
      * Compile view with layout.
-     * 
+     *
      * @return string
      */
     private function compileView()
@@ -79,7 +80,7 @@ class Template
 
         $output = ob_get_clean();
 
-        if(isset($layout)) {
+        if (isset($layout)) {
             $this->setLayout($layout);
         }
 

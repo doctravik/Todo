@@ -20,7 +20,7 @@ abstract class Filter
 
     /**
      * Allowed filters.
-     * 
+     *
      * @var array
      */
     protected $filters;
@@ -54,7 +54,7 @@ abstract class Filter
 
     /**
      * Retrieve all allowed filters from the web request.
-     * 
+     *
      * @return array
      */
     protected function getFilters()

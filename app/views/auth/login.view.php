@@ -10,10 +10,10 @@
                 <form action="/admin/login" method="POST">
                     <div class="form-group <?= errors('username')->exists() ? 'has-error' : '' ; ?>">
                         <label for="username" class="control-label">Username</label>
-                        <input type="text" id="username" name="username" class="form-control"  
+                        <input type="text" id="username" name="username" class="form-control"
                             value="<?= htmlspecialchars(old('username')) ; ?>" autofocus required>
 
-                        <?php if(errors('username')->exists()) : ?>
+                        <?php if (errors('username')->exists()) : ?>
                             <span class="help-block">
                                 <strong><?= errors('username')->first() ; ?></strong>
                             </span>
@@ -22,10 +22,10 @@
 
                     <div class="form-group <?= errors('password')->exists() ? 'has-error' : '' ; ?>">
                         <label for="password" class="control-label">Password</label>
-                        <input type="password" id="password" name="password" class="form-control"  
+                        <input type="password" id="password" name="password" class="form-control"
                             value="<?= htmlspecialchars(old('password')) ; ?>" required>
 
-                        <?php if(errors('password')->exists()) : ?>
+                        <?php if (errors('password')->exists()) : ?>
                             <span class="help-block">
                                 <strong><?= errors('password')->first() ; ?></strong>
                             </span>

@@ -6,7 +6,7 @@ class Hasher
 {
     /**
      * Create hash code for password value.
-     * 
+     *
      * @param  string $password
      * @return string
      */

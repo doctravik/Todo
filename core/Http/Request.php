@@ -48,7 +48,7 @@ class Request
 
     /**
      * Getter for request method.
-     * 
+     *
      * @return string
      */
     public function method()
@@ -58,7 +58,7 @@ class Request
 
     /**
      * Getter for request uri.
-     * 
+     *
      * @return string
      */
     public function uri()
@@ -68,7 +68,7 @@ class Request
 
     /**
      * Get all parameters from request.
-     * 
+     *
      * @return array
      */
     public function all()
@@ -89,7 +89,7 @@ class Request
 
     /**
      * Get parameter from request.
-     * 
+     *
      * @param  string $key
      * @return mixed
      */
@@ -100,7 +100,7 @@ class Request
 
     /**
      * Check if Request contains a given parameter.
-     * 
+     *
      * @param  string  $key
      * @return boolean
      */

@@ -2,13 +2,11 @@
 
 namespace Core\Session;
 
-use Core\Session\SessionStorage;
-
 class RequestSessionStorage extends SessionStorage
-{    
+{
     /**
      * Create new instance of the RequestSessionStorage.
-     * 
+     *
      * @param string $name of storage
      * @return void
      */

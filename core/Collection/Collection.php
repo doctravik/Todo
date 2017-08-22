@@ -13,7 +13,7 @@ class Collection implements Countable
 
     /**
      * Create an instance of the collection.
-     * 
+     *
      * @param array $items
      * @return void
      */
@@ -24,7 +24,7 @@ class Collection implements Countable
 
     /**
      * Count items from collection.
-     * 
+     *
      * @return integer
      */
     public function count()
@@ -34,7 +34,7 @@ class Collection implements Countable
 
     /**
      * Get all items from collection.
-     * 
+     *
      * @return array
      */
     public function all()
@@ -44,7 +44,7 @@ class Collection implements Countable
 
     /**
      * Check if the collection is empty.
-     * 
+     *
      * @return boolean
      */
     public function isEmpty()
@@ -54,7 +54,7 @@ class Collection implements Countable
 
     /**
      * Get first item from collection.
-     * 
+     *
      * @param  mixed $default value
      * @return mixed
      */
@@ -65,7 +65,7 @@ class Collection implements Countable
 
     /**
      * Check if the collection exists.
-     * 
+     *
      * @return boolean
      */
     public function exists()

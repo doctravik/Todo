@@ -8,7 +8,6 @@ use Core\Http\Response;
 use App\Filters\TaskFilter;
 use App\Models\Image\Image;
 use Core\Validator\Validator;
-use App\Controllers\Controller;
 use App\Models\Image\ImageHandler;
 use Core\Exceptions\NotAuthorisedException;
 
@@ -16,7 +15,7 @@ class TaskController extends Controller
 {
     /**
      * Show task's list.
-     * 
+     *
      * @return Response
      */
     public function index()
@@ -39,7 +38,7 @@ class TaskController extends Controller
 
     /**
      * Show create form for the task.
-     * 
+     *
      * @return Response
      */
     public function create()
@@ -51,7 +50,7 @@ class TaskController extends Controller
 
     /**
      * Store task in database.
-     * 
+     *
      * @return Response
      */
     public function store()
@@ -68,7 +67,7 @@ class TaskController extends Controller
             return Response::redirect("/tasks/create")->withErrors($validator->getErrors());
         }
 
-        if( $this->request->input('image')->getPath()) {
+        if ($this->request->input('image')->getPath()) {
             $image = Image::createFromPath($this->request->input('image')->getPath());
             $path = (new ImageHandler($image))->resize()->save();
         }

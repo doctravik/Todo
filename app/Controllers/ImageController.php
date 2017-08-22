@@ -6,7 +6,6 @@ use App\Models\Task;
 use Core\Http\Response;
 use App\Models\Image\Image;
 use Core\Validator\Validator;
-use App\Controllers\Controller;
 use App\Models\Image\ImageHandler;
 
 class ImageController extends Controller
@@ -20,7 +19,7 @@ class ImageController extends Controller
     public function store($id)
     {
         $uploadedImage = $this->request->input('image');
-        
+
         $validator = Validator::validate(['image' => $uploadedImage], [
             'image' => ['required', ['mimes' => 'jpeg,jpg,gif,png'], ['max' => '2048']]
         ]);

@@ -9,14 +9,14 @@ use Core\Session\SuccessSessionStorage;
 
 /**
  * Helper for output validation errors.
- * 
+ *
  * @param  string $errorName
  * @return ErrorsSessionStorage||Collection
  */
 function errors($errorName = null)
 {
     if ($errorName) {
-        return new Collection((new ErrorsSessionStorage())->get($errorName));    
+        return new Collection((new ErrorsSessionStorage())->get($errorName));
     }
 
     return new ErrorsSessionStorage();
@@ -24,7 +24,7 @@ function errors($errorName = null)
 
 /**
  * Helper for old input.
- * 
+ *
  * @param  string $key
  * @param  string $default value
  * @return mixed
@@ -38,7 +38,7 @@ function old($key, $default = '')
 
 /**
  * Helper for success message output.
- * 
+ *
  * @return SuccessSessionStorage
  */
 function success()
@@ -48,7 +48,7 @@ function success()
 
 /**
  * Dump the value and die script.
- * 
+ *
  * @param  mixed $value
  * @return void
  */
@@ -85,7 +85,7 @@ function config($key)
 
 /**
  * Create auth handler.
- * 
+ *
  * @return Auth
  */
 function auth()

@@ -6,7 +6,7 @@ class DeleteQueryBuilder
 {
     /**
      * Prepare DELETE query.
-     * 
+     *
      * @param  string $table
      * @return string
      */

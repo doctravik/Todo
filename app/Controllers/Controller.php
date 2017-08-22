@@ -9,14 +9,14 @@ abstract class Controller
 {
     /**
      * Web request
-     * 
+     *
      * @var Request
      */
     protected $request;
 
     /**
      * Query builder
-     * 
+     *
      * @var Builder
      */
     protected $builder;
@@ -29,5 +29,4 @@ abstract class Controller
         $this->request = new Request;
         $this->builder = new Builder;
     }
-
 }

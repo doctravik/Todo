@@ -2,7 +2,6 @@
 
 namespace Core;
 
-use Core\Container;
 use Core\Http\Request;
 use Core\Http\Response;
 use Core\Routing\Router;
@@ -23,10 +22,10 @@ class App
     {
         return $this->container;
     }
-    
+
     /**
      * Run application.
-     * 
+     *
      * @return mixed
      */
     public function run()
@@ -35,7 +34,7 @@ class App
         $request = $this->container['request'] = new Request;
         $router = $this->container['router'] = new Router($this->container['config']['routes']);
         $response = $this->container['response'] = new Response;
-        
+
         try {
             $response = $router->direct(parse_url($request->uri(), PHP_URL_PATH), $request->method());
         } catch (RouteNotFoundException $e) {
@@ -43,13 +42,13 @@ class App
         } catch (NotAuthorisedException $e) {
             $response = (new Response('Forbidden'))->withStatus(403);
         }
-        
+
         return $this->process($response);
     }
 
     /**
      * Process web response.
-     * 
+     *
      * @param  mixed $response
      * @return mixed
      */

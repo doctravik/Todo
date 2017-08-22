@@ -6,42 +6,42 @@ class Image
 {
     /**
      * Path to the image.
-     * 
+     *
      * @var string
      */
     protected $path;
 
     /**
      * Image type consider as IMAGETYPE_XXX constant.
-     * 
+     *
      * @var int
      */
     protected $type;
 
     /**
      * Image resource.
-     * 
+     *
      * @var mixed
      */
     protected $resource;
 
     /**
      * Width of the image.
-     * 
+     *
      * @var int
      */
     protected $width;
 
     /**
      * Height of the image.
-     * 
+     *
      * @var int
      */
     protected $height;
 
     /**
      * Create a new instance of the Image.
-     * 
+     *
      * @param string $path
      */
     public function __construct($path)
@@ -51,7 +51,7 @@ class Image
 
     /**
      * Create Image instance from the given path.
-     * 
+     *
      * @param  string $path
      * @return Image
      */
@@ -68,7 +68,7 @@ class Image
 
     /**
      * Get width of the image.
-     * 
+     *
      * @return int
      */
     public function getWidth()
@@ -78,7 +78,7 @@ class Image
 
     /**
      * Get height of the image.
-     * 
+     *
      * @return int
      */
     public function getHeight()
@@ -88,7 +88,7 @@ class Image
 
     /**
      * Get image resource.
-     * 
+     *
      * @return mixed
      */
     public function getResource()
@@ -98,7 +98,7 @@ class Image
 
     /**
      * Set image resource.
-     * 
+     *
      * @param mixed $resource
      * @return void
      */
@@ -109,7 +109,7 @@ class Image
 
     /**
      * Save image to file.
-     *  
+     *
      * @return string filepath
      */
     public function save()
@@ -125,7 +125,7 @@ class Image
 
     /**
      * Generate name of the file.
-     * 
+     *
      * @return string
      */
     protected function generateName()
@@ -140,7 +140,7 @@ class Image
 
     /**
      * Get filename of the image.
-     * 
+     *
      * @return string
      */
     protected function getFilename()
@@ -150,12 +150,12 @@ class Image
 
     /**
      * Get extension of the image.
-     * 
+     *
      * @return string
      */
     protected function getExtension()
     {
-        return pathinfo($this->path, PATHINFO_EXTENSION) 
+        return pathinfo($this->path, PATHINFO_EXTENSION)
             ?: $this->getExtensionFromType()[$this->type];
     }
 
@@ -173,7 +173,7 @@ class Image
 
     /**
      * Put image resource to file.
-     *  
+     *
      * @param  string $targetFilePath
      * @return string $targetFilePath
      */

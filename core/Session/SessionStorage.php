@@ -3,7 +3,7 @@
 namespace Core\Session;
 
 class SessionStorage
-{    
+{
     /**
      * @var string
      */
@@ -11,7 +11,7 @@ class SessionStorage
 
     /**
      * Create new instance of the SessionStorage.
-     * 
+     *
      * @param string $name of storage
      * @return void
      */
@@ -26,7 +26,7 @@ class SessionStorage
 
     /**
      * Put set of data to the session storage.
-     * 
+     *
      * @param  array $data
      * @return void
      */
@@ -37,7 +37,7 @@ class SessionStorage
 
     /**
      * Get value by key.
-     * 
+     *
      * @param  string $key
      * @param  mixed $default value
      * @return mixed
@@ -49,7 +49,7 @@ class SessionStorage
 
     /**
      * Check if session has the given key.
-     * 
+     *
      * @param  string $key
      * @return boolean
      */
@@ -60,52 +60,52 @@ class SessionStorage
 
     /**
      * Put value with the given key to the session.
-     * 
+     *
      * @param  string $key
      * @param  mixed $value
      * @return void
      */
     public function put($key, $value)
     {
-        $_SESSION[$this->name][$key] = $value; 
+        $_SESSION[$this->name][$key] = $value;
     }
 
     /**
      * Remove item from session.
-     * 
+     *
      * @param  string $key
      * @return void
      */
     public function forget($key)
     {
-        if($this->exists($key)) {
-           unset($_SESSION[$this->name][$key]);
+        if ($this->exists($key)) {
+            unset($_SESSION[$this->name][$key]);
         }
     }
 
     /**
      * Get all items from the session.
-     * 
+     *
      * @return array
      */
-    public function all() 
+    public function all()
     {
         return $_SESSION[$this->name];
     }
 
     /**
      * Check if session has given offset and it is not empty.
-     * 
+     *
      * @return boolean
      */
-    public function exists() 
+    public function exists()
     {
         return isset($_SESSION[$this->name]) && count($_SESSION[$this->name]) > 0;
     }
 
     /**
      * Clear session from all items.
-     * 
+     *
      * @return void
      */
     public function clear()

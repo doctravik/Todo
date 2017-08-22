@@ -9,14 +9,14 @@ class User
 {
     /**
      * Table for this model.
-     * 
+     *
      * @var string
      */
     protected $table = 'users';
 
     /**
      * Find user by username in db.
-     * 
+     *
      * @param  string $username
      * @return mixed
      */
@@ -37,7 +37,7 @@ class User
 
     /**
      * Register user in db.
-     * 
+     *
      * @param  array $attributes
      * @return boolean
      */

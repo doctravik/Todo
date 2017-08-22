@@ -15,20 +15,22 @@ class Container implements ArrayAccess
      * @var array
      */
     private $registry = [];
-    
+
     /**
      * Private construstor for the singleton.
      */
-    private function __construct() {}
+    private function __construct()
+    {
+    }
 
     /**
      * Getter for the instance.
-     * 
+     *
      * @return Container
      */
     public function instance()
     {
-        if (! self::$instance ) {
+        if (! self::$instance) {
             self::$instance = new self();
         }
 
@@ -37,7 +39,7 @@ class Container implements ArrayAccess
 
     /**
      * Load configurations.
-     * 
+     *
      * @param  array  $config
      * @return void
      */
@@ -50,7 +52,7 @@ class Container implements ArrayAccess
 
     /**
      * Bind dependency to the container.
-     * 
+     *
      * @param string $offset
      * @param mix $value
      * @return void
@@ -62,7 +64,7 @@ class Container implements ArrayAccess
 
     /**
      * Get dependency from the container.
-     * 
+     *
      * @param string $offset
      * @return mixed
      */
@@ -73,7 +75,7 @@ class Container implements ArrayAccess
 
     /**
      * Remove dependency from the container.
-     * 
+     *
      * @param string $offset
      * @return void
      */
@@ -86,7 +88,7 @@ class Container implements ArrayAccess
 
     /**
      * Check if container has the given dependency.
-     * 
+     *
      * @param string $offset
      * @return boolean
      */
@@ -97,7 +99,7 @@ class Container implements ArrayAccess
 
     /**
      * Alias to the offsetExists method.
-     * 
+     *
      * @param string $offset
      * @return boolean
      */
@@ -108,7 +110,7 @@ class Container implements ArrayAccess
 
     /**
      * Easy access to the dependency.
-     * 
+     *
      * @param  string $property
      * @return mixed
      */

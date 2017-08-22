@@ -4,10 +4,6 @@ namespace Core\Database;
 
 use Core\Container;
 use Core\Pagination\Paginator;
-use Core\Database\DeleteQueryBuilder;
-use Core\Database\InsertQueryBuilder;
-use Core\Database\SelectQueryBuilder;
-use Core\Database\UpdateQueryBuilder;
 use Core\Pagination\CurrentPageResolver;
 
 class Builder
@@ -44,21 +40,21 @@ class Builder
 
     /**
      * Allowed criterias.
-     * 
+     *
      * @var array
      */
     protected $allowedCriterias = ['join', 'where', 'and', 'orderBy', 'limit', 'offset'];
 
     /**
      * Binding parameters for the main statement.
-     * 
+     *
      * @var array
      */
     protected $bindings = [];
 
     /**
      * Binding parameters for the criteria statements.
-     * 
+     *
      * @var array
      */
     protected $criteriaBindings = [];
@@ -73,7 +69,7 @@ class Builder
 
     /**
      * Set value for table property.
-     * 
+     *
      * @param  string $table
      * @return $this
      */
@@ -86,7 +82,7 @@ class Builder
 
     /**
      * Set value for columns property.
-     * 
+     *
      * @param  array of columns
      * @return $this
      */
@@ -99,7 +95,7 @@ class Builder
 
     /**
      * Build WHERE part of query.
-     * 
+     *
      * @param  string $column
      * @param  string $operator
      * @param  string $value
@@ -121,7 +117,7 @@ class Builder
 
     /**
      * Build ORDER BY part of query.
-     * 
+     *
      * @param  string $column
      * @param  string $order
      * @return $this
@@ -136,7 +132,7 @@ class Builder
 
     /**
      * Set LIMIT part of query.
-     * 
+     *
      * @param  int $value
      * @return $this
      */
@@ -151,7 +147,7 @@ class Builder
 
     /**
      * Set OFFSET part of query.
-     * 
+     *
      * @param  int $value
      * @return $this
      */
@@ -165,7 +161,7 @@ class Builder
 
     /**
      * Alias for offset function.
-     * 
+     *
      * @param  int $value
      * @return $this
      */
@@ -176,7 +172,7 @@ class Builder
 
     /**
      * Build INNER JOIN query.
-     * 
+     *
      * @param  string $table
      * @param  string $leftColumn
      * @param  string $operator
@@ -192,13 +188,13 @@ class Builder
 
     /**
      * Execute insert query.
-     * 
+     *
      * @param  array $data
      * @return void
      */
     public function insert(array $data)
     {
-        $this->query = InsertQueryBuilder::prepare($this->table, $data);        
+        $this->query = InsertQueryBuilder::prepare($this->table, $data);
         $this->bindings = array_values($data);
 
         $this->execute();
@@ -206,7 +202,7 @@ class Builder
 
     /**
      * Execute update query.
-     * 
+     *
      * @param  array $data
      * @return void
      */
@@ -220,7 +216,7 @@ class Builder
 
     /**
      * Execute delete query.
-     * 
+     *
      * @return void
      */
     public function delete()
@@ -232,7 +228,7 @@ class Builder
 
     /**
      * Execute select query.
-     * 
+     *
      * @return array
      */
     public function get()
@@ -270,9 +266,9 @@ class Builder
         $page = $this->getCurrentPage();
 
         $total = $this->getCountForPagination();
-        
+
         $paginator = new Paginator($page, $perPage, $total);
-        
+
         $data = $total ? $this->getDataForPagination($paginator->currentPage(), $perPage) : [];
 
         return $paginator->setData($data);
@@ -280,7 +276,7 @@ class Builder
 
     /**
      * Get current page from uri.
-     * 
+     *
      * @return int
      */
     protected function getCurrentPage()
@@ -290,7 +286,7 @@ class Builder
 
     /**
      * Define total number of items before pagination.
-     * 
+     *
      * @return int
      */
     protected function getCountForPagination()
@@ -303,7 +299,7 @@ class Builder
 
     /**
      * Set new values for allowed criterias.
-     * 
+     *
      * @param array $criterias
      * @return void
      */
@@ -326,7 +322,7 @@ class Builder
 
     /**
      * Execute prepared query.
-     * 
+     *
      * @return mixed
      */
     protected function execute()
@@ -336,7 +332,7 @@ class Builder
         $query = $this->query . $criterias;
 
         $bindings = array_merge($this->bindings, $criteriaBindings);
-        
+
         try {
             $statement = $this->db->prepare($query);
             $statement->execute($bindings);
@@ -350,7 +346,7 @@ class Builder
     /**
      * Combine criterias in one string by order.
      * Combine criteriaBindings in one array by order.
-     * 
+     *
      * @return array
      */
     protected function prepareCriterias()

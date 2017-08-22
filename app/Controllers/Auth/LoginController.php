@@ -12,13 +12,13 @@ class LoginController extends Controller
 {
     /**
      * Show login form for admin.
-     * 
+     *
      * @return Response
      */
     public function showLoginForm()
     {
         if (Auth::check()) {
-            return Response::redirect("/tasks");            
+            return Response::redirect("/tasks");
         }
 
         return Response::view('auth/login');
@@ -26,13 +26,13 @@ class LoginController extends Controller
 
     /**
      * Login to the admin section.
-     * 
+     *
      * @return Response
      */
     public function login()
     {
         $attributes = $this->request->only(['username', 'password']);
-        
+
         $validator = Validator::validate($attributes, [
             'username' => ['required'],
             'password' => ['required']
@@ -61,13 +61,13 @@ class LoginController extends Controller
 
     /**
      * Logout from the admin section.
-     * 
+     *
      * @return Response
      */
     public function logout()
     {
-        Auth::logout(); 
-        
+        Auth::logout();
+
         return Response::redirect("/tasks");
     }
 

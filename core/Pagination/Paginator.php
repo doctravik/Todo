@@ -10,42 +10,42 @@ class Paginator implements IteratorAggregate
 {
     /**
      * Current page.
-     * 
+     *
      * @var int
      */
     protected $currentPage;
 
     /**
      * Number of displayed items per page.
-     * 
+     *
      * @var int
      */
     protected $perPage;
 
     /**
      * Total number of items.
-     * 
+     *
      * @var int
      */
     protected $total;
 
     /**
      * Last page of the paginator.
-     * 
+     *
      * @var int
      */
     protected $lastPage;
 
     /**
      * Paginated data from db.
-     * 
+     *
      * @var array
      */
     protected $data;
 
     /**
      * Page name displayed in the url.
-     * 
+     *
      * @var string
      */
     protected $pageName = 'page';
@@ -91,7 +91,7 @@ class Paginator implements IteratorAggregate
 
     /**
      * Set data for paginator.
-     * 
+     *
      * @param array $data
      * @return $this
      */
@@ -104,7 +104,7 @@ class Paginator implements IteratorAggregate
 
     /**
      * Get paginated data.
-     * 
+     *
      * @return array
      */
     public function getData()
@@ -134,7 +134,7 @@ class Paginator implements IteratorAggregate
 
     /**
      * Check if paginator has pages.
-     * 
+     *
      * @return boolean
      */
     public function hasPages()
@@ -144,13 +144,13 @@ class Paginator implements IteratorAggregate
 
     /**
      * Define url of the next page.
-     * 
+     *
      * @return string|null
      */
     public function nextPageUrl()
     {
         if ($this->hasNextPage()) {
-            return $this->createUrlFor($this->currentPage + 1);        
+            return $this->createUrlFor($this->currentPage + 1);
         }
 
         return null;
@@ -158,7 +158,7 @@ class Paginator implements IteratorAggregate
 
     /**
      * Check if paginator has next page.
-     * 
+     *
      * @return boolean
      */
     public function hasNextPage()
@@ -168,13 +168,13 @@ class Paginator implements IteratorAggregate
 
     /**
      * Define url of the previous page.
-     * 
+     *
      * @return string|null
      */
     public function previousPageUrl()
     {
         if ($this->hasPreviousPage()) {
-            return $this->createUrlFor($this->currentPage - 1);        
+            return $this->createUrlFor($this->currentPage - 1);
         }
 
         return null;
@@ -182,7 +182,7 @@ class Paginator implements IteratorAggregate
 
     /**
      * Check if paginator has previous page.
-     * 
+     *
      * @return boolean
      */
     public function hasPreviousPage()
@@ -192,7 +192,7 @@ class Paginator implements IteratorAggregate
 
     /**
      * Get pages.
-     * 
+     *
      * @return array
      */
     public function pages()
@@ -207,7 +207,7 @@ class Paginator implements IteratorAggregate
 
     /**
      * Get access to data property from object.
-     * 
+     *
      * @return ArrayIterator
      */
     public function getIterator()
@@ -230,7 +230,7 @@ class Paginator implements IteratorAggregate
 
     /**
      * Create url for the page.
-     * 
+     *
      * @param  int $page
      * @return string
      */
@@ -240,7 +240,7 @@ class Paginator implements IteratorAggregate
             $page = 1;
         }
 
-        $parameters = array_merge($this->urlQueries, [$this->pageName => $page]);        
+        $parameters = array_merge($this->urlQueries, [$this->pageName => $page]);
 
         return '?' . http_build_query($parameters, '', '&');
     }
