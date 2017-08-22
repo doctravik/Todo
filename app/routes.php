@@ -15,3 +15,5 @@ $router->post('/register', 'Auth\\RegisterController@register');
 $router->get('/admin', 'Auth\\LoginController@showLoginForm');
 $router->post('/admin/login', 'Auth\\LoginController@login');
 $router->post('/admin/logout', 'Auth\\LoginController@logout');
+
+$router->get('/about', 'PagesController@about');

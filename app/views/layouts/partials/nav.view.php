@@ -23,6 +23,7 @@
                 <a href="/tasks/create" type="button" class="btn btn-info navbar-btn">
                     Create a new task
                 </a>
+                <li><a href="/about">About</a></li>
             </ul>
 
             <!-- Right Side Of Navbar -->
